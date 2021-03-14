@@ -1,0 +1,52 @@
+<section class="section">
+  <div class="login-card">
+    <mat-card>
+      <spinner-loading *ngIf="isLoading"></spinner-loading>
+      <mat-card-title>
+        <h2>SaveUP</h2>
+      </mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="form">
+          <div fxLayout="column">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" />
+              <mat-error validate controlName="email"></mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" autofilled>
+              <mat-label>Senha</mat-label>
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="senha"
+              />
+              <mat-error validate controlName="senha"></mat-error>
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+            <div fxLayout="column" fxLayoutGap="20px">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="entrar()"
+                (keyup.enter)="entrar()"
+              >
+                Entrar
+              </button>
+              <a>Não possui conta ? cadastra-se</a>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>
