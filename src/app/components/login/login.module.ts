@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { SpinnerLoadingModule } from 'src/app/shared/components/spinner-loading/spinner-loading.module';
 import { CommonModule } from '@angular/common';
 import { ValidatorModule } from 'src/app/shared/components/validator/validator.module';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 const routes: Routes = [{ path: '', component: LoginComponent }];
@@ -31,6 +33,7 @@ const routes: Routes = [{ path: '', component: LoginComponent }];
     MatIconModule,
     SpinnerLoadingModule,
     ValidatorModule,
+    MatSnackBarModule
   ],
   exports: [LoginComponent],
 

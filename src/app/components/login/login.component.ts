@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { AuthorizationService } from 'src/app/service/authorization.service';
 import { LoginService } from 'src/app/service/login.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
+
 
 @Component({
   selector: 'app-login',
@@ -20,19 +23,20 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly _fb: FormBuilder,
     private loginService: LoginService,
-    private authorization: AuthorizationService
+    private authorization: AuthorizationService,
+    private usuarioService: UsuarioService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.form = this._fb.group({
-      email: ['', [Validators.required, Validators.maxLength(100)]],
+      email: ['', [Validators.required, Validators.maxLength(100), Validators.email]],
       senha: ['', [Validators.required, Validators.maxLength(16)]],
     });
   }
 
   entrar() {
     this.form.markAllAsTouched();
-
     if (this.form.valid) {
       this.isLoading = true;
       this.loginService
@@ -40,6 +44,10 @@ export class LoginComponent implements OnInit {
         .subscribe((jwt) => {
           this.authorization.setAccessToken(jwt.access_token);
           this.authorization.setRefreshToken(jwt.refresh_token);
+        }, (error) => {
+          if (error.status === 400) {
+            this.snackBar.open('Usuario ou email inválidos', null, {duration: 3000})
+          }
         })
         .add(() => (this.isLoading = false));
     }

@@ -1,0 +1,93 @@
+<section class="section">
+  <div class="login-card">
+    <mat-card>
+      <div *ngIf="!showCheck">
+        <spinner-loading *ngIf="isLoading"></spinner-loading>
+        <mat-card-title>
+          <h2>CADASTRO</h2>
+        </mat-card-title>
+        <mat-card-content>
+          <form [formGroup]="form">
+            <div fxLayout="column">
+              <mat-form-field appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="nome" />
+                <mat-error validate controlName="nome"></mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" />
+                <mat-error validate controlName="email"></mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" autofilled>
+                <mat-label>Senha</mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="senha1"
+                />
+                <mat-error validate controlName="senha1"></mat-error>
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>{{
+                    hide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+              <mat-form-field appearance="outline" autofilled>
+                <mat-label>Confirmar Senha</mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="senha2"
+                />
+                <mat-error validate controlName="senha2"></mat-error>
+                <mat-error *ngIf="form.get('senha2').hasError('notEquals')">
+                  As senhas não coincidem
+                </mat-error>
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>{{
+                    hide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+              <div fxLayout="column" fxLayoutGap="20px">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="entrar()"
+                  (keyup.enter)="entrar()"
+                >
+                  CADASTRAR
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-card-content>
+      </div>
+      <div *ngIf="showCheck">
+        <mat-card-title>Cadastro efetuado com sucesso!</mat-card-title>
+        <mat-card-content>
+          <div style="margin-top: 30px;">
+            <ng-check-animation></ng-check-animation>
+            <h4>
+              Obrigado por cadastrar no SAVEUP, enviamos um email de confirmação
+              para seu email cadastrado
+            </h4>
+          </div>
+        </mat-card-content>
+      </div>
+    </mat-card>
+  </div>
+</section>
