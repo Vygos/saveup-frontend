@@ -47,7 +47,7 @@ export class CadastroComponent implements OnInit {
             Validators.maxLength(100),
             Validators.email,
           ],
-          asyncValidators: this.existsByEmail,
+          asyncValidators: this.existsByEmail(this.usuarioService),
         }),
         senha1: [
           '',
@@ -71,8 +71,6 @@ export class CadastroComponent implements OnInit {
   }
 
   entrar() {
-    this.showCheck = true;
-
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
@@ -115,13 +113,15 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  existsByEmail(control: AbstractControl) {
-    if (!control.value) {
-      return null;
-    }
+  existsByEmail(usuarioService: UsuarioService) {
+    return (control: AbstractControl) => {
+      if (!control.value) {
+        return null;
+      }
 
-    return this.usuarioService
-      .existsByEmail(control.value)
-      .pipe(map((exists) => (exists ? { emailExists: true } : null)));
+      return usuarioService
+        .existsByEmail(control.value)
+        .pipe(map((exists) => (exists ? { emailExists: true } : null)));
+    };
   }
 }
