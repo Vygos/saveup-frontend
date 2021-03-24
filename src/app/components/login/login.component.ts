@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Route, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { AuthorizationService } from 'src/app/service/authorization.service';
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private authorization: AuthorizationService,
     private usuarioService: UsuarioService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
         .subscribe((jwt) => {
           this.authorization.setAccessToken(jwt.access_token);
           this.authorization.setRefreshToken(jwt.refresh_token);
+          this.router.navigate(['home'])
         }, (error) => {
           if (error.status === 400) {
             this.snackBar.open('Usuario ou email inválidos', null, {duration: 3000})
