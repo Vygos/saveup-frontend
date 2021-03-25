@@ -1,0 +1,247 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap");
+
+body,
+h1,
+p,
+h2,
+ul,
+li,
+a {
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.wrapper {
+  width: 100vw;
+  background: transparent;
+}
+.navbar {
+  max-width: 100%;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 10px;
+  display: ruby-base;
+  background: #212121;
+  flex-wrap: wrap;
+}
+.navbar ul {
+  float: right;
+  margin-right: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navbar ul li {
+  text-decoration: none;
+  list-style-type: none;
+  color: white;
+  font-family: "Roboto Slab", serif;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 8px;
+  font-size: 18px;
+}
+
+.logo {
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  font-family: "Roboto Slab", serif;
+}
+
+.navbar ul li a:hover {
+  text-decoration: inherit;
+  color: #5ebb46;
+}
+
+.header {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+.img-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+  animation: zoom 20s;
+}
+@keyframes zoom {
+  0% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.banner {
+  position: absolute;
+  top: 30%;
+  left: 15%;
+  flex-direction: column;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.banner h1 {
+  color: #00ff15;
+  font-size: 3.5rem;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  text-shadow: 0.2rem 0.3rem 4px rgba(0, 0, 0, 0.4);
+  line-height: 3.5rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: moveBanner 1s 0.5s forwards;
+}
+
+.sobre {
+  border-top: 2px solid #00ff15;
+  border-bottom: 2px solid #00ff15;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 60px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.sobre-info {
+  flex: 2 1 130px;
+  margin: 0 10px;
+  flex-wrap: wrap;
+  max-width: 960px;
+}
+
+.sobre-info h1 {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+  align-items: center;
+  justify-content: center;
+}
+
+.sobre-info p {
+  font-size: 20px;
+  line-height: 1.4;
+  margin-bottom: 1em;
+  color: #7c7c7c;
+  font-family: "Roboto Slid", sans-serif;
+}
+
+.sobre-img {
+  flex: 1 1 160;
+  margin: 0 10px;
+}
+
+.sobre img {
+  display: block;
+  max-width: 100%;
+  width: 220px;
+  height: 550px;
+}
+
+.servicos {
+  max-width: 960px;
+  margin: 60px auto;
+}
+.servicos h1 {
+  font-size: 3em;
+  margin: 0 10px 60px 10px;
+}
+
+.servicos-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.servicos-itens {
+  flex: 1 1 175px;
+  margin: 10px;
+}
+.servicos-itens h2 {
+  font-size: 3em;
+  color: #a4a4a4a4;
+  padding: 60px 20px;
+}
+
+.servicos-itens img {
+  width: 600px;
+  height: 500px;
+}
+
+.green {
+  border-top: 8px solid #38fa07;
+}
+
+.black {
+  border-top: solid 8px #000000;
+}
+
+.graw {
+  border-top: solid 8px rgba(75, 43, 43, 0.867);
+}
+
+@keyframes moveBanner {
+  0% {
+    transform: translateY(10rem) rotateY(-30deg);
+  }
+  100% {
+    transform: translate(0) rotateY(0);
+    opacity: 1;
+  }
+}
+
+.banner p {
+  font-family: "Roboto Slab", serif;
+  font-weight: 500;
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 0.1rem 0.2rem rgba(0, 0, 0, 0.4);
+  margin-bottom: 2rem;
+  animation: moveBanner 1s 0.7s forwards;
+  opacity: 0;
+}
+
+.banner button {
+  font-family: "Roboto Slab", serif;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  background: #38fa07;
+  background: -webkit-linear-gradient(to right, #00ff15, #51c93a);
+  background: linear-gradient(to left, #3c9c3c, #27ad2e);
+  padding: 1rem 3rem;
+  border-radius: 5px;
+  border-color: none;
+  border: none;
+  cursor: pointer;
+  animation: moveBanner 1s 0.9s forwards;
+  opacity: 0;
+  text-align: none;
+}
+.banner button:hover {
+  background: #00ff15;
+  transition: 0.5s;
+  opacity: 1.8;
+}
