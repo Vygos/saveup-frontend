@@ -16,6 +16,18 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
+  {
+    path: 'conta',
+    outlet: 'home',
+    loadChildren: () =>
+      import('./conta/conta.module').then((m) => m.ContaModule),
+  },
+  {
+    path: 'dashboard',
+    outlet: 'home',
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
 ];
 
 @NgModule({

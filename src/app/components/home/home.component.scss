@@ -30,9 +30,17 @@ mat-icon + h4 {
 .menu-item {
   width: 199px;
   padding: 5px;
+  text-decoration: none;
+  color: white;
 }
 
 .menu-item:hover{
   background-color: #5a5a5a;
   cursor: pointer;
 }
+
+
+.menu-item-active{
+  background-color: #5a5a5a;
+}
+
