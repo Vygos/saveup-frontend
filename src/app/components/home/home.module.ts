@@ -10,25 +10,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SpinnerLoadingModule } from 'src/app/shared/components/spinner-loading/spinner-loading.module';
 import { MenuComponent } from './menu/menu.component';
 import { MenuItemComponent } from './menu/menu-item/menu-item.component';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent,
-  },
-  {
-    path: 'conta',
-    outlet: 'home',
-    loadChildren: () =>
-      import('./conta/conta.module').then((m) => m.ContaModule),
-  },
-  {
-    path: 'dashboard',
-    outlet: 'home',
-    loadChildren: () =>
-      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-  },
-];
+import { HomeRoutingModule } from './home-routing.module';
 
 @NgModule({
   declarations: [HomeComponent, MenuComponent, MenuItemComponent],
@@ -36,7 +18,7 @@ const routes: Routes = [
     CommonModule,
     MatToolbarModule,
     MatIconModule,
-    RouterModule.forChild(routes),
+    HomeRoutingModule,
     MatButtonModule,
     MatSidenavModule,
     SpinnerLoadingModule,
