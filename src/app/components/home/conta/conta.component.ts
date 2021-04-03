@@ -1,31 +1,181 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
+import { ObjectDTO } from 'src/app/models/objectdto.model';
+import { Usuario } from 'src/app/models/usuario.model';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { CPF } from 'src/app/shared/components/masks/masks';
 
 @Component({
   selector: 'app-conta',
   templateUrl: './conta.component.html',
-  styleUrls: ['./conta.component.scss']
+  styleUrls: ['./conta.component.scss'],
 })
 export class ContaComponent implements OnInit {
-
   form: FormGroup;
+  isEdit: boolean = false;
+  usuario: Usuario;
+  isLoading: boolean = false;
+  cpfMask = CPF;
+  showFotoInput;
 
-  constructor(private _fb: FormBuilder) { }
+  constructor(
+    private _fb: FormBuilder,
+    private usuarioService: UsuarioService,
+    private activatedRoute: ActivatedRoute,
+    private matSnack: MatSnackBar
+  ) {}
+
+  get foto() {
+    return this.form.get('foto');
+  }
+
+  get nome() {
+    return this.form.get('nome');
+  }
+
+  get email() {
+    return this.form.get('email');
+  }
+
+  get cpf() {
+    return this.form.get('cpf');
+  }
+
+  get vlRenda() {
+    return this.form.get('vlRenda');
+  }
+
+  get dtNascimento() {
+    return this.form.get('dtNascimento');
+  }
+
+  get dtCadastro() {
+    return this.form.get('dtCadastro');
+  }
 
   ngOnInit(): void {
-    this.initForm();
+    this.load();
   }
 
-  initForm() {
+  load() {
+    this.initForm(new Usuario());
+
+    this.isLoading = true;
+    this.activatedRoute.params.subscribe((params) => {
+      let id = params['id'] as number;
+
+      this.usuarioService.findById(id).subscribe((usuario: Usuario) => {
+        this.usuario = usuario;
+        this.initForm(usuario);
+        this.isLoading = false;
+      });
+    });
+    this.usuarioService;
+  }
+
+  initForm(usuario?: Usuario) {
     this.form = this._fb.group({
-      foto: [''],
-      nome: ['ITADORI YUUJI DA SILVA'],
-      email: ['teste@gmail.com'],
-      cpf: ['05487678154'],
-      dtCadastro: ['18/09/1996'],
-      dtNascimento: ['18/09/1996'],
-      vlRenda: [10.90]
-    })
+      id: [usuario.id ? usuario.id : null],
+      foto: [usuario.foto ? usuario.foto : null],
+      nome: [
+        { value: usuario.nome ? usuario.nome : null, disabled: true },
+        [Validators.required, Validators.maxLength(255)],
+      ],
+      email: new FormControl(
+        {
+          value: usuario.email ? usuario.email : null,
+          disabled: true,
+        },
+        [Validators.required, Validators.email, Validators.maxLength(255)]
+      ),
+      cpf: [{ value: usuario.cpf ? usuario.cpf : null, disabled: true }, [Validators.required]],
+      dtCadastro: [
+        {
+          value: usuario.dtCadastro ? usuario.dtCadastro : null,
+          disabled: true,
+        },
+      ],
+      dtNascimento: [
+        {
+          value: usuario.dtNascimento ? usuario.dtNascimento : null,
+          disabled: true,
+        },
+        [Validators.required],
+      ],
+      vlRenda: [
+        { value: usuario.vlRenda ? usuario.vlRenda : null, disabled: true },
+        [Validators.required]
+      ],
+    });
   }
 
+  editar() {
+    this.isEdit = true;
+
+    this.nome.enable();
+    this.cpf.enable();
+    this.vlRenda.enable();
+    this.dtNascimento.enable();
+    this.showFotoInput = true;
+  }
+
+  cancelar() {
+    this.isEdit = false;
+
+    this.nome.disable();
+    this.cpf.disable();
+    this.vlRenda.disable();
+    this.dtNascimento.disable();
+    this.foto.disable();
+    this.showFotoInput = false;
+
+    this.initForm(this.usuario);
+  }
+
+  salvar() {
+    this.form.markAllAsTouched();
+
+    console.log('form', this.form.value);
+
+    if (this.form.valid) {
+      this.isLoading = true;
+      if (this.form.value.foto) {
+        const foto = this.form.value.foto;
+        let usuario = this.form.value as Usuario;
+
+        this.usuarioService
+          .upload(this.usuario.id, foto)
+          .subscribe((foto: ObjectDTO) => {
+            usuario.foto = foto.object;
+
+            this.usuarioService
+              .atualizar(usuario.id, usuario)
+              .subscribe(() => {
+                this.isLoading = false;
+                this.matSnack.open('Dados atualizados com sucesso', null, {
+                  duration: 2000,
+                });
+                this.isEdit = false;
+              })
+              .add(() => (this.isLoading = false));
+          });
+      } else {
+        this.usuarioService
+          .atualizar(this.usuario.id, this.usuario)
+          .subscribe(() => {
+            this.isLoading = false;
+            this.matSnack.open('Dados atualizados com sucesso', null, {
+              duration: 2000,
+            });
+          });
+      }
+    }
+  }
 }

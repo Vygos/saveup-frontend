@@ -1,3 +1,4 @@
+import { SimpleChanges } from '@angular/core';
 import { Component, Input, OnInit, Self } from '@angular/core';
 import {
   AbstractControl,
@@ -33,7 +34,11 @@ export class ValidatorComponent implements OnInit {
       this.controlName
     ) as FormControl;
 
-    // this.validate();
+    setTimeout(() => {
+      this.controlName = this.control.control.get(
+        this.controlName
+      ) as FormControl;
+    }, 5000)
   }
 
   getErrors() {

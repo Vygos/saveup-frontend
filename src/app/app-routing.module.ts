@@ -22,6 +22,9 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/main/main.module').then((m) => m.MainModule),
   },
+  {
+    path: "**", redirectTo: "/main"
+  }
 ];
 
 @NgModule({

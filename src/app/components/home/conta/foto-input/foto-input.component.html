@@ -1,9 +1,17 @@
 <div class="avatar-outside">
-    <div class="avatar">
-        <img src="../../../../../assets/avatar.png" *ngIf="!fileChoosenBase64; else imgChoosen"/>
-        <ng-template #imgChoosen>
-            <img [src]="fileChoosenBase64" />
-        </ng-template>
-    </div>
-    <input type="file" class="input-file" (change)="getFile($event.target.files)"/>
+  <div class="avatar">
+    <img
+      src="../../../../../assets/avatar.png"
+      *ngIf="!fileChoosenBase64; else imgChoosen"
+    />
+    <ng-template #imgChoosen>
+      <img [src]="fileChoosenBase64" />
+    </ng-template>
+  </div>
+  <input
+    type="file"
+    class="input-file"
+    (change)="getFile($event.target.files)"
+    *ngIf="show"
+  />
 </div>

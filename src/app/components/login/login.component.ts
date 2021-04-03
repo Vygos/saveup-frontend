@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
       this.loginService
         .entrar(this.form.value)
         .subscribe((jwt) => {
+          console.log(jwt.access_token)
           this.authorization.setAccessToken(jwt.access_token);
           this.authorization.setRefreshToken(jwt.refresh_token);
           this.router.navigate(['home'])

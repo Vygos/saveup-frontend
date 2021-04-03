@@ -74,6 +74,7 @@ export class CadastroComponent implements OnInit {
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
+      this.isLoading = true;
       let usuario = this.form.value as Usuario;
       usuario.secret = this.form.value.senha1;
       this.authorization
@@ -86,6 +87,7 @@ export class CadastroComponent implements OnInit {
           this.usuarioService
             .salvar(usuario, headers)
             .subscribe(() => {
+              this.isLoading = false;
               this.showCheck = true;
             })
             .add(() => (this.isLoading = false));
