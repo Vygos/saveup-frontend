@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Usuario } from 'src/app/models/usuario.model';
 import { AuthorizationService } from 'src/app/service/authorization.service';
+import { FotoAtualizarService } from 'src/app/service/foto-atualizar.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
@@ -17,11 +18,19 @@ export class HomeComponent implements OnInit {
   constructor(
     private authorizationService: AuthorizationService,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private fotoAtualizar: FotoAtualizarService
   ) {}
 
   ngOnInit(): void {
     this.load();
+    this.watchFotoAtualizarEvent();
+  }
+
+  watchFotoAtualizarEvent() {
+    this.fotoAtualizar.fotoBase64.subscribe((fotoBase64) => {
+      this.usuario.fotoBase64 = fotoBase64;
+    })
   }
 
   load() {

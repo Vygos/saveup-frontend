@@ -2,8 +2,10 @@
   <div class="login-card">
     <mat-card>
       <spinner-loading *ngIf="isLoading"></spinner-loading>
-      <mat-card-title>
-        <h2>SaveUP</h2>
+      <mat-card-title style="background-color: gray;">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <img src="../../../assets/LogoSystem.png">
+        </div>
       </mat-card-title>
       <mat-card-content>
         <form [formGroup]="form">

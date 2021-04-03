@@ -63,11 +63,7 @@
                 </button>
               </mat-form-field>
               <div fxLayout="column" fxLayoutGap="20px">
-                <button
-                  mat-raised-button
-                  color="primary"
-                  (click)="entrar()"
-                >
+                <button mat-raised-button color="primary" (click)="entrar()">
                   CADASTRAR
                 </button>
               </div>
@@ -78,12 +74,17 @@
       <div *ngIf="showCheck">
         <mat-card-title>Cadastro efetuado com sucesso!</mat-card-title>
         <mat-card-content>
-          <div style="margin-top: 30px;">
+          <div style="margin-top: 30px">
             <ng-check-animation></ng-check-animation>
             <h4>
               Obrigado por cadastrar no SAVEUP, enviamos um email de confirmação
               para seu email cadastrado
             </h4>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <button mat-raised-button color="primary" [routerLink]="['/login']">
+              LOGIN
+            </button>
           </div>
         </mat-card-content>
       </div>

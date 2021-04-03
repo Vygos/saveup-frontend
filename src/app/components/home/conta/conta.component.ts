@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ObjectDTO } from 'src/app/models/objectdto.model';
 import { Usuario } from 'src/app/models/usuario.model';
+import { FotoAtualizarService } from 'src/app/service/foto-atualizar.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { CPF } from 'src/app/shared/components/masks/masks';
 
@@ -29,7 +30,8 @@ export class ContaComponent implements OnInit {
     private _fb: FormBuilder,
     private usuarioService: UsuarioService,
     private activatedRoute: ActivatedRoute,
-    private matSnack: MatSnackBar
+    private matSnack: MatSnackBar,
+    private fotoAtualizar: FotoAtualizarService
   ) {}
 
   get foto() {
@@ -128,15 +130,17 @@ export class ContaComponent implements OnInit {
 
   cancelar() {
     this.isEdit = false;
+    this.disabledFields();
+    this.initForm(this.usuario);
+  }
 
+  disabledFields() {
     this.nome.disable();
     this.cpf.disable();
     this.vlRenda.disable();
     this.dtNascimento.disable();
     this.foto.disable();
     this.showFotoInput = false;
-
-    this.initForm(this.usuario);
   }
 
   salvar() {
@@ -147,22 +151,29 @@ export class ContaComponent implements OnInit {
     if (this.form.valid) {
       this.isLoading = true;
       if (this.form.value.foto) {
-        const foto = this.form.value.foto;
+        const fotoBlob = this.form.value.foto;
         let usuario = this.form.value as Usuario;
 
         this.usuarioService
-          .upload(this.usuario.id, foto)
+          .upload(this.usuario.id, fotoBlob)
           .subscribe((foto: ObjectDTO) => {
             usuario.foto = foto.object;
 
             this.usuarioService
               .atualizar(usuario.id, usuario)
               .subscribe(() => {
+
                 this.isLoading = false;
+                this.isEdit = false;
+                this.disabledFields();
+
                 this.matSnack.open('Dados atualizados com sucesso', null, {
                   duration: 2000,
                 });
-                this.isEdit = false;
+
+
+                this.atualizarFotoHome(fotoBlob);
+
               })
               .add(() => (this.isLoading = false));
           });
@@ -177,5 +188,22 @@ export class ContaComponent implements OnInit {
           });
       }
     }
+  }
+
+  async atualizarFotoHome(file: File) {
+    const base64 = await this.toBase64(file) as string;
+
+    const base64WihoutBegin = base64.split(',')[1];
+
+    this.fotoAtualizar.fotoBase64.next(base64WihoutBegin);
+  }
+
+  toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   }
 }
