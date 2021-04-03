@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:8080",
-  email: "sistema@saveup.com.br",
-  pswd: "saveup-backend"
+  apiUrl: 'http://localhost:8080',
+  jwtApiUrl: 'localhost:8080',
+  email: 'sistema@saveup.com.br',
+  pswd: 'saveup-backend',
 };
 
 /*

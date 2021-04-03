@@ -8,12 +8,12 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: 'conta',
+        path: 'conta/:id',
         loadChildren: () =>
           import('./conta/conta.module').then((m) => m.ContaModule),
       },
       {
-        path: 'dashboard',
+        path: 'dashboard/:id',
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },

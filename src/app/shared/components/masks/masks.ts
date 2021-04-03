@@ -1,0 +1,1 @@
+export const CPF = '000.000.000-00'

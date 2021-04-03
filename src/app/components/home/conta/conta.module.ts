@@ -11,15 +11,16 @@ import { ValidatorModule } from 'src/app/shared/components/validator/validator.m
 import { ReactiveFormsModule } from '@angular/forms';
 import { SpinnerLoadingModule } from 'src/app/shared/components/spinner-loading/spinner-loading.module';
 import { MatIconModule } from '@angular/material/icon';
-import { FotoInputDirective } from './foto-input/foto-input.directive';
 import { FotoInputComponent } from './foto-input/foto-input.component';
+import { NgxMaskModule } from 'ngx-mask'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [
   {path: '', component: ContaComponent}
 ]
 
 @NgModule({
-  declarations: [ContaComponent, FotoInputDirective, FotoInputComponent],
+  declarations: [ContaComponent, FotoInputComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -31,7 +32,9 @@ const routes: Routes = [
     MatButtonModule,
     ValidatorModule,
     SpinnerLoadingModule,
-    MatIconModule
+    MatIconModule,
+    NgxMaskModule,
+    MatSnackBarModule
   ]
 })
 export class ContaModule { }

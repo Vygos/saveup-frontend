@@ -1,8 +1,12 @@
 <section class="dados-pessoais">
   <mat-card>
-    <!-- <spinner-loading></spinner-loading> -->
-    <mat-card-title fxLayout="row" fxLayoutAlign="center">
-      TITULO/LOGO
+    <spinner-loading *ngIf="isLoading"></spinner-loading>
+    <mat-card-title
+      fxLayout="row"
+      fxLayoutAlign="center"
+      style="background-color: gray"
+    >
+      <img src="../../../../assets/LogoSystem.png" />
     </mat-card-title>
     <mat-card-subtitle fxLayout="row" fxLayoutAlign="center">
       <h3>Dados Pessoais</h3>
@@ -10,48 +14,63 @@
     <mat-card-content>
       <form [formGroup]="form">
         <div fxLayout="row" fxLayoutAlign="space-around center">
-          <foto-input fxFlex="10"></foto-input>
+          <foto-input [foto]="foto" [show]="showFotoInput" fxFlex="10"></foto-input>
           <mat-form-field appearance="outline" fxFlex="50">
             <mat-label>Nome</mat-label>
-            <input matInput formControlName="nome" />
-            <mat-error></mat-error>
+            <input matInput formControlName="nome"  />
+            <mat-error validate controlName="nome"></mat-error>
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-around center">
           <mat-form-field appearance="outline" fxFlex="30">
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" />
-            <mat-error></mat-error>
+            <mat-error validate controlName="email"></mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" fxFlex="30">
             <mat-label>CPF</mat-label>
-            <input matInput formControlName="cpf" />
-            <mat-error></mat-error>
+            <input matInput formControlName="cpf" [mask]="cpfMask" />
+            <mat-error validate controlName="cpf"></mat-error>
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="space-around center">
           <mat-form-field appearance="outline" fxFlex="30">
             <mat-label>Renda Mensal</mat-label>
             <input matInput formControlName="vlRenda" />
-            <mat-error></mat-error>
+            <mat-error validate controlName="vlRenda"></mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" fxFlex="30">
             <mat-label>Data de Nascimento</mat-label>
-            <input matInput formControlName="cpf" />
-            <mat-error></mat-error>
+            <input type="date" matInput formControlName="dtNascimento" />
+            <mat-error validate controlName="dtNascimento"></mat-error>
           </mat-form-field>
         </div>
         <div fxLayout="row">
           <div fxFlex="10"></div>
           <mat-form-field appearance="outline" fxFlex="30">
             <mat-label>Data Cadastro</mat-label>
-            <input matInput formControlName="vlRenda" />
+            <input type="date" matInput formControlName="dtCadastro" />
           </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="space-around center">
-          <button mat-raised-button color="primary">
+        <div fxLayout="row" fxLayoutAlign="end" *ngIf="!isEdit">
+          <button
+            class="button-edit"
+            mat-raised-button
+            fxFlex="10"
+            (click)="editar()"
+          >
+            Edit
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center" *ngIf="isEdit">
+          <button class="button-save" mat-raised-button color="primary" (click)="salvar()">
             Salvar
             <mat-icon>save</mat-icon>
+          </button>
+          <button class="button-cancel" mat-raised-button (click)="cancelar()">
+            Cancelar
+            <mat-icon>edit_off</mat-icon>
           </button>
         </div>
       </form>

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -15,7 +16,8 @@ export class AuthorizationService {
 
   constructor(
     private http: HttpClient,
-    @Inject(LOCAL_STORAGE) private storage: StorageService
+    @Inject(LOCAL_STORAGE) private storage: StorageService,
+    private jwtHelperService: JwtHelperService
   ) {}
 
   getToken(email: string, password: string): Observable<JWT> {
@@ -33,10 +35,28 @@ export class AuthorizationService {
   }
 
   setAccessToken(token: string) {
-    this.storage.set(this.ACCESS_TOKEN, token);
+    localStorage.setItem(this.ACCESS_TOKEN, token);
   }
 
   setRefreshToken(token: string) {
-    this.storage.set(this.REFRESH_TOKEN, token);
+    localStorage.setItem(this.REFRESH_TOKEN, token);
+  }
+
+  getAccessToken(): string {
+    return localStorage.getItem(this.ACCESS_TOKEN);
+  }
+
+  getLoggedUserEmail(): string {
+    let accessToken = this.getAccessToken();
+
+    if (!accessToken) {
+      return;
+    }
+
+
+    const decodedToken = this.jwtHelperService.decodeToken(accessToken);
+
+    return decodedToken.email;
+
   }
 }
