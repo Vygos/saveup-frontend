@@ -11,6 +11,7 @@ import { SpinnerLoadingModule } from 'src/app/shared/components/spinner-loading/
 import { MenuComponent } from './menu/menu.component';
 import { MenuItemComponent } from './menu/menu-item/menu-item.component';
 import { HomeRoutingModule } from './home-routing.module';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [HomeComponent, MenuComponent, MenuItemComponent],
@@ -23,6 +24,7 @@ import { HomeRoutingModule } from './home-routing.module';
     MatSidenavModule,
     SpinnerLoadingModule,
     FlexLayoutModule,
+    MatCardModule
   ],
 })
 export class HomeModule {}

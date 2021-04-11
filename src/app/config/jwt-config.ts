@@ -12,6 +12,7 @@ export const jwtConfig: JwtModuleOptions = {
     disallowedRoutes: [
       `${environment.apiUrl}/oauth/token`,
       `${environment.apiUrl}/usuario/salvar`,
+      `${environment.apiUrl}/usuario/existsByEmail`
     ],
   },
 };

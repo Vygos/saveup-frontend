@@ -17,6 +17,20 @@ const routes: Routes = [
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
+      {
+        path: 'apresentacao/:id',
+        loadChildren: () =>
+          import('./apresentacao/apresentacao.module').then(
+            (m) => m.ApresentacaoModule
+          ),
+      },
+      {
+        path: 'tipo-ganho',
+        loadChildren: () =>
+          import('./tipo-ganho/tipo-ganho.module').then(
+            (m) => m.TipoGanhoModule
+          ),
+      },
     ],
   },
 ];

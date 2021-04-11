@@ -18,6 +18,15 @@
         fxLayout="row"
         fxLayoutAlign="start start"
         class="menu-item"
+        [routerLink]="['apresentacao', usuario.id]"
+      >
+        <mat-icon>home</mat-icon>
+        <h4>Home</h4>
+      </a>
+      <a
+        fxLayout="row"
+        fxLayoutAlign="start start"
+        class="menu-item"
         [routerLink]="['conta', usuario.id]"
         routerLinkActive="menu-item-active"
       >
@@ -48,11 +57,11 @@
         fxLayout="row"
         fxLayoutAlign="start start"
         class="menu-item"
-        [routerLink]="['tipo-ganhos', usuario.id]"
+        [routerLink]="['tipo-ganho']"
         routerLinkActive="menu-item-active"
       >
         <mat-icon>attach_money</mat-icon>
-        <h4>Dashboard</h4>
+        <h4>Tipo Ganho</h4>
       </a>
     </div>
   </mat-drawer>
@@ -69,6 +78,6 @@
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar>
-  <router-outlet></router-outlet>
   <spinner-loading *ngIf="isLoading"></spinner-loading>
+  <router-outlet></router-outlet>
 </mat-drawer-container>
