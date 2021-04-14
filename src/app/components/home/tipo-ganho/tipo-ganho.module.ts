@@ -6,12 +6,13 @@ import { ValidatorModule } from 'src/app/shared/components/validator/validator.m
 import { SpinnerLoadingComponent } from 'src/app/shared/components/spinner-loading/spinner-loading.component';
 import { SpinnerLoadingModule } from 'src/app/shared/components/spinner-loading/spinner-loading.module';
 import { MatTableModule } from '@angular/material/table';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
-
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [TipoGanhoComponent],
@@ -24,7 +25,10 @@ import {MatIconModule} from '@angular/material/icon';
     MatCardModule,
     FlexLayoutModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule
   ],
 })
 export class TipoGanhoModule {}
