@@ -1,0 +1,25 @@
+<section>
+  <div fxLayout="row" fxLayoutAlign="center">
+    <h3>Novo Cadastro</h3>
+  </div>
+  <div class="content" fxLayoutAlign="center">
+    <mat-form-field fxFlex="70">
+      <mat-label>Nome</mat-label>
+      <input type="text" matInput />
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <button mat-raised-button style="background-color: green; color: white">
+      Salvar
+      <mat-icon>save</mat-icon>
+    </button>
+    <button
+      mat-raised-button
+      style="background-color: red; color: white"
+      (click)="dialogRef.close()"
+    >
+      Cancelar
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</section>
