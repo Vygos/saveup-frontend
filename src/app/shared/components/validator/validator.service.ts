@@ -9,7 +9,8 @@ export class ValidatorService {
     required: "Campo de preenchimento obrigatório",
     minlength: 'Tamanho minímo de 6 caracteres',
     email: 'Email inválido',
-    emailExists: "Email já cadastrado"
+    emailExists: "Email já cadastrado",
+    isNameAlreadyExists: 'Nome já cadastrado'
 
   };
 

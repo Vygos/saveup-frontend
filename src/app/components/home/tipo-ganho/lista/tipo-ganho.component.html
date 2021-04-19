@@ -2,6 +2,7 @@
   <mat-card>
     <mat-card-title fxLayoutAlign="center"> TIPO GANHO </mat-card-title>
     <mat-card-content>
+      <spinner-loading *ngIf="isLoading"></spinner-loading>
       <div fxLayout="row" fxLayoutAlign="center">
         <mat-form-field appearance="outline" fxFlex="50">
           <mat-label>Pesquisar</mat-label>
@@ -13,7 +14,7 @@
       </div>
       <div fxLayout="column">
         <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="data">
+          <table mat-table [dataSource]="page.content">
             <!-- Position Column -->
             <ng-container matColumnDef="nome">
               <th mat-header-cell *matHeaderCellDef>Descrição</th>
@@ -40,7 +41,11 @@
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
             <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
           </table>
-          <mat-paginator [length]="100" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+          <mat-paginator
+            [length]="page.totalElements"
+            [pageSizeOptions]="[2, 5, 10, 15]"
+            (page)="onPageChanges($event)"
+          ></mat-paginator>
         </div>
       </div>
     </mat-card-content>

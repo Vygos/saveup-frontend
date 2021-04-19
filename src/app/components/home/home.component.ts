@@ -35,13 +35,9 @@ export class HomeComponent implements OnInit {
 
   load() {
     const email = this.authorizationService.getLoggedUserEmail();
-
-    this.isLoading = true;
-
     this.usuarioService
       .findByEmail(email)
-      .subscribe((usuario: Usuario) => (this.usuario = usuario))
-      .add(() => (this.isLoading = false));
+      .subscribe((usuario: Usuario) => (this.usuario = usuario));
   }
 
   navigate(url: string) {

@@ -16,11 +16,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NovoCadastroComponent } from './novo-cadastro/novo-cadastro.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [TipoGanhoComponent, NovoCadastroComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     TipoGanhoRoutingModule,
     ValidatorModule,
     SpinnerLoadingModule,
@@ -33,7 +36,8 @@ import {MatMenuModule} from '@angular/material/menu';
     MatInputModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSnackBarModule
   ],
 })
 export class TipoGanhoModule {}
