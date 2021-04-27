@@ -3,15 +3,25 @@
     <mat-card-title fxLayoutAlign="center"> TIPO GANHO </mat-card-title>
     <mat-card-content>
       <spinner-loading *ngIf="isLoading"></spinner-loading>
-      <div fxLayout="row" fxLayoutAlign="center">
-        <mat-form-field appearance="outline" fxFlex="50">
-          <mat-label>Pesquisar</mat-label>
-          <input type="text" matInput />
-          <button mat-icon-button matSuffix>
-            <mat-icon>search</mat-icon>
-          </button>
-        </mat-form-field>
-      </div>
+      <form [formGroup]="form">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <mat-form-field appearance="outline" fxFlex="50">
+            <mat-label>Pesquisar</mat-label>
+            <input
+              type="text"
+              matInput
+              formControlName="nome"
+              (keydown.enter)="pesquisar()"
+            />
+            <button mat-icon-button matSuffix (click)="pesquisar()">
+              <mat-icon>search</mat-icon>
+            </button>
+            <button type="reset" mat-icon-button matSuffix>
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </form>
       <div fxLayout="column">
         <div class="mat-elevation-z8">
           <table mat-table [dataSource]="page.content">
@@ -31,7 +41,7 @@
                     <mat-icon>edit</mat-icon>
                     Editar
                   </button>
-                  <button mat-menu-item>
+                  <button modal (confirm)="delete($event, element)" mat-menu-item>
                     <mat-icon>delete</mat-icon>
                     Deletar
                   </button>
@@ -44,6 +54,7 @@
           <mat-paginator
             [length]="page.totalElements"
             [pageSizeOptions]="[2, 5, 10, 15]"
+            [pageSize]="page.size"
             (page)="onPageChanges($event)"
           ></mat-paginator>
         </div>

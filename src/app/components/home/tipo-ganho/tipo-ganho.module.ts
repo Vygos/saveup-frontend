@@ -18,6 +18,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ModalConfirmModule } from 'src/app/shared/components/modal-confirm/modal-confirm.module';
 
 @NgModule({
   declarations: [TipoGanhoComponent, NovoCadastroComponent],
@@ -37,7 +38,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatPaginatorModule,
     MatDialogModule,
     MatMenuModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ModalConfirmModule
   ],
 })
 export class TipoGanhoModule {}

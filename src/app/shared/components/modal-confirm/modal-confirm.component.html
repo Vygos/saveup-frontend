@@ -1,0 +1,15 @@
+<div mat-dialog-title>Confirmação</div>
+<div mat-dialog-content>
+  {{ data.legenda }}
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" style="color: white" (click)="confirm()">Sim</button>
+  <button
+    mat-raised-button
+    style="background-color: #d30d0d; color: white"
+    cdkFocusInitial
+    (click)="dialogRef.close()"
+  >
+    Não
+  </button>
+</div>
