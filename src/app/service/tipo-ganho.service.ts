@@ -18,13 +18,20 @@ export class TipoGanhoService {
     );
   }
 
-  findAll<T>(page: Page<T>): Observable<Page<T>> {
-    const params = new HttpParams()
+  findAll<T>(page: Page<T>, nome: string = null): Observable<Page<T>> {
+    let params = new HttpParams()
       .append('page', page.number.toString())
       .append('size', page.size.toString());
 
+    if (nome) {
+      params = new HttpParams()
+        .append('page', page.number.toString())
+        .append('size', page.size.toString())
+        .append('nome', nome);
+    }
+
     return this.http.get<Page<T>>(
-      `${environment.apiUrl}/tipo-ganho/findAllByEmail`,
+      `${environment.apiUrl}/tipo-ganho/findAllByFilter`,
       {
         params,
       }
@@ -40,5 +47,9 @@ export class TipoGanhoService {
         params,
       }
     );
+  }
+
+  deleteById(id: number): Observable<any> {
+    return this.http.delete(`${environment.apiUrl}/tipo-ganho/${id}`);
   }
 }

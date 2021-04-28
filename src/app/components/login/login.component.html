@@ -26,7 +26,7 @@
               <button
                 mat-icon-button
                 matSuffix
-                (click)="hide = !hide"
+                (click)="hideShow($event)"
                 [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide"
               >
@@ -40,7 +40,6 @@
                 mat-raised-button
                 color="primary"
                 (click)="entrar()"
-                (keyup.enter)="entrar()"
               >
                 Entrar
               </button>

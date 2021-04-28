@@ -56,4 +56,10 @@ export class LoginComponent implements OnInit {
         .add(() => (this.isLoading = false));
     }
   }
+
+  hideShow(event) {
+    if (event.pointerType === 'mouse') {
+      this.hide = !this.hide
+    }
+  }
 }

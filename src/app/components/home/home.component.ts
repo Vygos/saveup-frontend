@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { Usuario } from 'src/app/models/usuario.model';
@@ -15,6 +16,8 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = false;
   usuario: Usuario = { id: 0 };
 
+  @ViewChild(MatDrawer, {static: true}) matDrawer: MatDrawer;
+
   constructor(
     private authorizationService: AuthorizationService,
     private usuarioService: UsuarioService,
@@ -25,6 +28,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.load();
     this.watchFotoAtualizarEvent();
+  }
+  
+  ngAfterViewInit(): void {
+    this.matDrawer.toggle();
   }
 
   watchFotoAtualizarEvent() {
