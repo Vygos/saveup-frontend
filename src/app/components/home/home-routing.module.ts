@@ -31,6 +31,15 @@ const routes: Routes = [
             (m) => m.TipoGanhoModule
           ),
       },
+
+      {
+        path: 'tipo-despesa',
+        loadChildren: () =>
+          import('./tipo-despesa/tipo-despesa.module').then(
+            (m) => m.TipoDespesaModule
+          ),
+      },
+ 
     ],
   },
 ];
