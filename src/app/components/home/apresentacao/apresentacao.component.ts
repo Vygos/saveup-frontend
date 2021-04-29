@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApresentacaoComponent implements OnInit {
 
+  isLoading: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }
