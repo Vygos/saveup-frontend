@@ -11,10 +11,12 @@ import { ModalConfirmModule } from 'src/app/shared/components/modal-confirm/moda
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { UpdateTipoDespesaComponent } from './update-tipo-despesa/update-tipo-despesa.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [TipoDespesaComponent],
+  declarations: [TipoDespesaComponent, UpdateTipoDespesaComponent],
   imports: [
     CommonModule,
     TipoDespesaRoutingModule,
@@ -26,7 +28,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ModalConfirmModule,
     MatPaginatorModule,
     MatButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDialogModule,
+    ReactiveFormsModule,
   ],
 })
 export class TipoDespesaModule {}
