@@ -19,7 +19,7 @@ import { NgxMaskModule } from 'ngx-mask';
     CommonModule,
     HttpClientModule,
     JwtModule.forRoot(jwtConfig),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })
