@@ -14,6 +14,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { UpdateTipoDespesaComponent } from './update-tipo-despesa/update-tipo-despesa.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [TipoDespesaComponent, UpdateTipoDespesaComponent],
@@ -31,6 +34,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatInputModule,
+    FormsModule,
+    MatFormFieldModule,
   ],
+  exports: [MatFormFieldModule, MatInputModule],
 })
 export class TipoDespesaModule {}
