@@ -4,6 +4,21 @@
     <mat-card-content>
       <spinner-loading *ngIf="isLoading"></spinner-loading>
 
+      <form [formGroup]="form">
+        <div fxLayout="row" fxLayoutAlign="center">
+          <mat-form-field appearance="outline" fxFlex="50">
+            <mat-label>Pesquisar</mat-label>
+            <input type="text" matInput formControlName="nome" (keydown.enter)="pesquisar()"/>
+            <button mat-icon-button matSuffix (click)="pesquisar()">
+              <mat-icon>search</mat-icon>
+            </button>
+            <button type="reset" mat-icon-button matSuffix>
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </form>
+
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="page.content">
           <ng-container matColumnDef="nome">
@@ -19,12 +34,12 @@
               </button>
 
               <mat-menu #actions>
-                <button mat-menu-item (click)="openModal(element)">
+                <button mat-menu-item (click)="editar(element)">
                   <mat-icon>edit</mat-icon>
                   Editar
                 </button>
 
-                <button modal (confirm)="delete($event, element)" mat-menu-item>
+                <button modal-confirm (confirm)="delete($event, element)" mat-menu-item>
                   <mat-icon>delete</mat-icon>
                   Deletar
                 </button>
@@ -35,20 +50,12 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-        <mat-paginator
-          [length]="page.totalElements"
-          [pageSize]="page.size"
-          [pageSizeOptions]="[2, 5, 10, 15]"
-          (page)="onPageChanges($event)"
-        ></mat-paginator>
+        <mat-paginator [length]="page.totalElements" [pageSize]="page.size" [pageSizeOptions]="[2, 5, 10, 15]"
+          (page)="onPageChanges($event)"></mat-paginator>
       </div>
     </mat-card-content>
     <div fxLayout="row" fxLayoutAlign="end">
-      <button
-        mat-raised-button
-        style="background-color: green; color: white"
-        (click)="adicionar()"
-      >
+      <button mat-raised-button style="background-color: green; color: white" (click)="adicionar()">
         Cadastrar Novo
         <mat-icon>add</mat-icon>
       </button>

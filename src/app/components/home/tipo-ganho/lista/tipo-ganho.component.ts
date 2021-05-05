@@ -21,7 +21,7 @@ interface Filtro {
   styleUrls: ['./tipo-ganho.component.scss'],
 })
 export class TipoGanhoComponent implements OnInit {
-  isLoading: boolean = true;
+  isLoading = true;
 
   columnsToDisplay = ['nome', 'ação'];
 
@@ -118,7 +118,7 @@ export class TipoGanhoComponent implements OnInit {
 
         this.load();
       },
-      () => this.showSnackBar('Não foi possivel deletar tipo ganho')
+      () => this.showSnackBar('Não foi possível deletar tipo ganho')
     );
   }
 }

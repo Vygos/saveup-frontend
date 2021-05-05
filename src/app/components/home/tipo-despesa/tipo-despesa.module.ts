@@ -14,9 +14,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { UpdateTipoDespesaComponent } from './update-tipo-despesa/update-tipo-despesa.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NovoCadastroComponent } from './novo-cadastro/novo-cadastro.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  declarations: [TipoDespesaComponent, UpdateTipoDespesaComponent],
+  declarations: [TipoDespesaComponent, UpdateTipoDespesaComponent, NovoCadastroComponent],
   imports: [
     CommonModule,
     TipoDespesaRoutingModule,
@@ -31,6 +36,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     FlexLayoutModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatInputModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSnackBarModule
   ],
+  exports: [MatFormFieldModule, MatInputModule],
 })
 export class TipoDespesaModule {}

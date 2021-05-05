@@ -1,5 +1,14 @@
-<form [formGroup]="form">
-  <label>Tipo Despesa</label>
-  <input class="inputModal" type="text" formControlName="nome" />
-  <button (click)="updateTipoDespesa()">Atualizar</button>
+<form [formGroup]="form" class="formContainer">
+  <mat-form-field class="ContainerInput">
+    <mat-label>Tipo Despesa</mat-label>
+    <input class="inputModal" type="text" formControlName="nome" matInput />
+  </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="space-around center">
+    <button [disabled]="form.invalid" (click)="updateTipoDespesa()" mat-raised-button color="primary">
+      Atualizar
+    </button>
+    <button mat-raised-button style="background-color: red; color: white" (click)="dialogRef.close()">
+      Cancelar
+    </button>
+  </div>
 </form>

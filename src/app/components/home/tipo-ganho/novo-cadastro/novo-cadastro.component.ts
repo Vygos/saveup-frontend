@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -22,7 +22,7 @@ export interface NovoCadastroModal<T> {
 })
 export class NovoCadastroComponent implements OnInit {
   form: FormGroup;
-  
+
   isLoading: boolean;
 
   onClose = new EventEmitter<NovoCadastroModal<NovoCadastroComponent>>();
