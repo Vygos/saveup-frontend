@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 import { ModalConfirmComponent } from './modal-confirm.component';
 
 @Directive({
-  selector: 'button[modal]',
+  selector: 'button[modal-confirm]',
 })
 export class ModalConfirmDirective {
   @Input() legenda: string = 'Você realmente deseja realizar essa ação? ';
