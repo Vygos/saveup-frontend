@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Page } from 'src/app/models/page.model';
 import { TipoDespesa } from 'src/app/models/tipo-despesa.model';
 import { TipoDespesaService } from 'src/app/service/tipo-despesa.service';
+import { NovoCadastroComponent } from './novo-cadastro/novo-cadastro.component';
 import { UpdateTipoDespesaComponent } from './update-tipo-despesa/update-tipo-despesa.component';
 
 @Component({
@@ -12,6 +15,8 @@ import { UpdateTipoDespesaComponent } from './update-tipo-despesa/update-tipo-de
   styleUrls: ['./tipo-despesa.component.scss'],
 })
 export class TipoDespesaComponent implements OnInit {
+  form: FormGroup;
+
   isLoading = false;
 
   page: Page<TipoDespesa> = new Page({ number: 0, size: 5 });
@@ -20,10 +25,16 @@ export class TipoDespesaComponent implements OnInit {
 
   constructor(
     private tipoDespesaService: TipoDespesaService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      nome: [null]
+    });
+
     this.load();
   }
 
@@ -31,8 +42,10 @@ export class TipoDespesaComponent implements OnInit {
     this.isLoading = true;
     this.tipoDespesaService
       .findAll(this.page)
-      .subscribe((page) => (this.page = page), console.log)
-      .add(() => (this.isLoading = false));
+      .subscribe((page) => {
+        this.page = page;
+        this.isLoading = false;
+      }, console.log);
   }
 
   onPageChanges(page: PageEvent) {
@@ -41,39 +54,69 @@ export class TipoDespesaComponent implements OnInit {
     this.load();
   }
 
+  showSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'end',
+    });
+  }
+
   delete(dialogRef: MatDialogRef<any>, tipo: TipoDespesa) {
     dialogRef.close();
 
     this.tipoDespesaService
       .deleteById(tipo.id)
-      .subscribe(() => this.load(), console.log);
+      .subscribe(() => {
+        this.showSnackBar('Ação realizada com sucesso');
+        this.load();
+      }, () => this.showSnackBar('Não foi possível deletar tipo despesa'));
   }
 
   adicionar() {
-    const nome = `teste${this.genNumberRandom()}`;
-    this.tipoDespesaService
-      .salvar(nome)
-      .subscribe(() => this.load(), console.log);
+    const novoTipoDespesaRef = this.dialog.open(NovoCadastroComponent, {
+      width: '500px'
+    });
+
+    novoTipoDespesaRef.componentInstance.onClose.subscribe(({tipoDespesa, dialogRef}) => {
+      console.log('entrou');
+      dialogRef.close();
+
+      this.tipoDespesaService.salvar(tipoDespesa.nome)
+        .subscribe(() => {
+          this.showSnackBar('Cadastrado com sucesso');
+          this.load();
+        }, () => this.showSnackBar('Não foi possível cadastrar'));
+    });
   }
 
-  openModal(tipoDespesa: TipoDespesa) {
-    const UpdateTipoDespesaRef = this.dialog.open(UpdateTipoDespesaComponent, {
+  editar(tipoDespesa: TipoDespesa) {
+    const updateTipoDespesaRef = this.dialog.open(UpdateTipoDespesaComponent, {
       width: '250px',
       data: { tipoDespesa },
     });
-    UpdateTipoDespesaRef.componentInstance.onClose.subscribe(
-      ({ updatedTipoDespesa, dialogRef }) => {
+    updateTipoDespesaRef.componentInstance.onClose.subscribe(
+      ({ updatedTipoDespesa, dialogRef}) => {
         dialogRef.close();
 
         this.tipoDespesaService
           .atualizarById(updatedTipoDespesa)
-          .subscribe(() => this.load(), console.log);
+          .subscribe(() => {
+            this.showSnackBar('Ação realizada com sucesso');
+            this.load();
+          }, () => this.showSnackBar('Não foi possível editar o tipo despesa'));
       },
       console.log
     );
   }
 
-  genNumberRandom(): number {
-    return Math.floor(Math.random() * 1000);
+  pesquisar() {
+    const { nome } = this.form.value;
+    this.isLoading = true;
+    this.tipoDespesaService.findAll(this.page, nome)
+      .subscribe(page => this.page = page,
+        () => this.showSnackBar('Não foi possivel carregar os dados')
+      )
+      .add(() => this.isLoading = false);
   }
 }
