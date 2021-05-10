@@ -8,7 +8,6 @@ import { AuthorizationService } from 'src/app/service/authorization.service';
 import { LoginService } from 'src/app/service/login.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -32,7 +31,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this._fb.group({
-      email: ['', [Validators.required, Validators.maxLength(100), Validators.email]],
+      email: [
+        '',
+        [Validators.required, Validators.maxLength(100), Validators.email],
+      ],
       senha: ['', [Validators.required, Validators.maxLength(16)]],
     });
   }
@@ -43,23 +45,29 @@ export class LoginComponent implements OnInit {
       this.isLoading = true;
       this.loginService
         .entrar(this.form.value)
-        .subscribe((jwt) => {
-          console.log(jwt.access_token)
-          this.authorization.setAccessToken(jwt.access_token);
-          this.authorization.setRefreshToken(jwt.refresh_token);
-          this.router.navigate(['home'])
-        }, (error) => {
-          if (error.status === 400) {
-            this.snackBar.open('Usuario ou email inválidos', null, {duration: 3000})
+        .subscribe(
+          (jwt) => {
+            console.log(jwt.access_token);
+            this.authorization.setAccessToken(jwt.access_token);
+            this.authorization.setRefreshToken(jwt.refresh_token);
+            const { id } = this.authorization.getLoggedUser();
+            this.router.navigate(['home/apresentacao/', id]);
+          },
+          (error) => {
+            if (error.status === 400) {
+              this.snackBar.open('Usuario ou email inválidos', null, {
+                duration: 3000,
+              });
+            }
           }
-        })
+        )
         .add(() => (this.isLoading = false));
     }
   }
 
   hideShow(event) {
     if (event.pointerType === 'mouse') {
-      this.hide = !this.hide
+      this.hide = !this.hide;
     }
   }
 }

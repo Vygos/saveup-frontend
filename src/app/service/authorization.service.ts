@@ -4,13 +4,13 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Usuario } from '../models/usuario.model';
 import { JWT } from './jwt.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorizationService {
-
   private readonly ACCESS_TOKEN = 'access_token';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
 
@@ -46,17 +46,19 @@ export class AuthorizationService {
     return localStorage.getItem(this.ACCESS_TOKEN);
   }
 
-  getLoggedUserEmail(): string {
+  getLoggedUser(): Usuario {
     let accessToken = this.getAccessToken();
 
     if (!accessToken) {
       return;
     }
 
-
     const decodedToken = this.jwtHelperService.decodeToken(accessToken);
 
-    return decodedToken.email;
-
+    return {
+      id: decodedToken.id,
+      email: decodedToken.email,
+      nome: decodedToken.nome,
+    };
   }
 }

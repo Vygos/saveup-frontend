@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   isLoading: boolean = false;
   usuario: Usuario = { id: 0 };
 
-  @ViewChild(MatDrawer, {static: true}) matDrawer: MatDrawer;
+  @ViewChild(MatDrawer, { static: true }) matDrawer: MatDrawer;
 
   constructor(
     private authorizationService: AuthorizationService,
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
     this.load();
     this.watchFotoAtualizarEvent();
   }
-  
+
   ngAfterViewInit(): void {
     this.matDrawer.toggle();
   }
@@ -37,11 +37,11 @@ export class HomeComponent implements OnInit {
   watchFotoAtualizarEvent() {
     this.fotoAtualizar.fotoBase64.subscribe((fotoBase64) => {
       this.usuario.fotoBase64 = fotoBase64;
-    })
+    });
   }
 
   load() {
-    const email = this.authorizationService.getLoggedUserEmail();
+    const { email } = this.authorizationService.getLoggedUser();
     this.usuarioService
       .findByEmail(email)
       .subscribe((usuario: Usuario) => (this.usuario = usuario));
