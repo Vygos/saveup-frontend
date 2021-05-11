@@ -21,6 +21,7 @@
                 matInput
                 [type]="hide ? 'password' : 'text'"
                 formControlName="senha"
+                (keydown.enter)="entrar()"
               />
               <mat-error validate controlName="senha"></mat-error>
               <button
