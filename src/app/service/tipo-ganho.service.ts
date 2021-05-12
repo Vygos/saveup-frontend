@@ -52,4 +52,12 @@ export class TipoGanhoService {
   deleteById(id: number): Observable<any> {
     return this.http.delete(`${environment.apiUrl}/tipo-ganho/${id}`);
   }
+  atualizarById(tipoGanho: TipoGanho): Observable<any> {
+    const { id, nome } = tipoGanho;
+    const url = `${environment.apiUrl}/tipo-ganho/${id}`;
+
+    return this.http.patch(url, {
+      nome,
+    });
+  }
 }
