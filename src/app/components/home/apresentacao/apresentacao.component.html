@@ -1,37 +1,39 @@
 <section class="container">
     <mat-card>
         <spinner-loading *ngIf="isLoading"></spinner-loading>
-        <mat-card-content class="conteudo">
-            <div class="saldo">
-                <p>Saldo atual:</p>
-                <p class="saldo-valor">R$ 5000,00</p>
-            </div>
-
-            <div class="cards">
-                <mat-card class="cards-container">
-                    <mat-card-content>
-                        <div>
-                            <p>Receitas</p>
-                            <mat-icon class="receita-color" inline="true">arrow_circle_up</mat-icon>
-                        </div>
-                        <p class="receita-color">R$ 1500,00</p>
-                    </mat-card-content>
-                </mat-card>
-
-                <mat-card class="cards-container">
-                    <mat-card-content>
-                        <div>
-                            <p>Despesas</p>
-                            <mat-icon class="despesa-color" inline="true">arrow_circle_down</mat-icon>
-                        </div>
-                        <p class="despesa-color">R$ 1500,00</p>
-                    </mat-card-content>
-                </mat-card>
+        <mat-card-content>
+            <div class="conteudo">
+                <div class="saldo">
+                    <p>Saldo atual:</p>
+                    <p class="saldo-valor">R$ 5000,00</p>
+                </div>
+    
+                <div class="cards">
+                    <mat-card class="cards-container">
+                        <mat-card-content>
+                            <div>
+                                <p>Receitas</p>
+                                <mat-icon class="receita-color" inline="true">arrow_circle_up</mat-icon>
+                            </div>
+                            <p class="receita-color">R$ 1500,00</p>
+                        </mat-card-content>
+                    </mat-card>
+    
+                    <mat-card class="cards-container">
+                        <mat-card-content>
+                            <div>
+                                <p>Despesas</p>
+                                <mat-icon class="despesa-color" inline="true">arrow_circle_down</mat-icon>
+                            </div>
+                            <p class="despesa-color">R$ 1500,00</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
             </div>
 
             <div>
-                <mat-form-field>
-                    <label>Ano</label>
+                <mat-form-field appearance="outline">
+                    <mat-label>Ano</mat-label>
                     <mat-select>
                         <mat-option value="2019">2019</mat-option>
                         <mat-option value="2020">2020</mat-option>
@@ -39,6 +41,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+            <tab-view-months [data]="dados"></tab-view-months>
         </mat-card-content>
     </mat-card>
 </section>
