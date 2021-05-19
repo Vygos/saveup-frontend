@@ -1,0 +1,91 @@
+<mat-tab-group>
+  <!-- <mat-tab label="Janeiro">
+    <div fxLayout="row" fxLayoutAlign="start">
+      <h3 style="margin-left: 20px;"><b>GANHOS</b></h3>
+    </div>
+    <div fxLayout="row">
+      <span fxFlex.gt-sm >1.</span>
+      <span fxFlex.gt-sm>MEGA SENA</span>
+      <span fxFlex.gt-sm>R$25,00 <mat-icon class="receita-color" inline="true">arrow_circle_up</mat-icon></span>
+    </div>
+    <div fxLayout="row">
+      <span fxFlex.gt-sm>2.</span>
+      <span fxFlex.gt-sm>LOTOFÁCIL </span>
+      <span fxFlex.gt-sm>R$25,00 <mat-icon class="receita-color" inline="true">arrow_circle_up</mat-icon></span>
+    </div>
+    <div fxLayout="row">
+      <span fxFlex.gt-sm>3.</span>
+      <span fxFlex.gt-sm>TESTE</span>
+      <span fxFlex.gt-sm >R$25,00 <mat-icon class="receita-color" inline="true">arrow_circle_up</mat-icon></span>
+    </div>
+    <div fxLayout="row">
+      <span fxFlex.gt-sm>4.</span>
+      <span fxFlex.gt-sm>SALÁRIO</span>
+      <span fxFlex.gt-sm>R$2500,00 <mat-icon class="receita-color" inline="true">arrow_circle_up</mat-icon></span>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start">
+      <h3 style="margin-left: 20px"><b>DESPESAS</b></h3>
+    </div>
+    <div fxLayout="row">
+      <span fxFlex.gt-sm >1.</span>
+      <span fxFlex.gt-sm>FACULDADE</span>
+      <span fxFlex.gt-sm>R$500,00<mat-icon class="despesa-color" inline="true">arrow_circle_down</mat-icon></span>
+    </div>
+    <div fxLayout="row">
+      <span fxFlex.gt-sm>2.</span>
+      <span fxFlex.gt-sm>ALUGUEL</span>
+      <span fxFlex.gt-sm>R$850,00 <mat-icon class="despesa-color" inline="true">arrow_circle_down</mat-icon></span>
+    </div>
+  </mat-tab>
+  <mat-tab label="Fevereiro">Feveiro</mat-tab>
+  <mat-tab label="Março">Março</mat-tab> -->
+
+  <!-- <mat-tab *ngFor="let item of data" [label]="item.mes">
+    <h3 style="margin-left: 20px"><b>GANHOS</b></h3>
+    <div fxLayout="row" *ngFor="let ganhos of item.ganhos; let i = index">
+      <span fxFlex.gt-sm> {{ i }}.</span>
+      <span fxFlex.gt-sm>{{ ganhos.tipo.nome }}</span>
+      <span fxFlex.gt-sm
+        > R${{ ganhos.valor}}
+        <mat-icon class="receita-color" inline="true"
+          >arrow_circle_up</mat-icon
+        ></span
+      >
+      <mat-divider></mat-divider>
+    </div>
+  </mat-tab> -->
+
+  <mat-tab *ngFor="let item of data" [label]="item.mes">
+    <h3 style="margin-left: 20px"><b>GANHOS</b></h3>
+    <div
+      fxLayout="row"
+      *ngFor="let ganhos of item.ganhos; let i = index"
+      style="margin-top: 10px"
+    >
+      <span fxFlex.gt-sm> {{ i }}.</span>
+      <span fxFlex.gt-sm>{{ ganhos.tipo.nome }}</span>
+      <span fxFlex.gt-sm>
+        R${{ ganhos.valor }}
+        <mat-icon class="receita-color" inline="true"
+          >arrow_circle_up</mat-icon
+        ></span
+      >
+    </div>
+    <mat-divider></mat-divider>
+    <h3 style="margin-left: 20px"><b>DESPESAS</b></h3>
+    <div
+      fxLayout="row"
+      *ngFor="let despesa of item.despesas; let i = index"
+      style="margin-top: 10px"
+    >
+      <span fxFlex.gt-sm> {{ i }}.</span>
+      <span fxFlex.gt-sm>{{ despesa.tipo.nome }}</span>
+      <span fxFlex.gt-sm>
+        R${{ despesa.valor }}
+        <mat-icon class="despesa-color" inline="true"
+          >arrow_circle_down</mat-icon
+        ></span
+      >
+    </div>
+  </mat-tab>
+</mat-tab-group>

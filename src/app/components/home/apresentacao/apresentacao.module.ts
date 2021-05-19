@@ -6,18 +6,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
 import { SpinnerLoadingModule } from 'src/app/shared/components/spinner-loading/spinner-loading.module';
 import { ApresentacaoComponent } from './apresentacao.component';
+import { TabViewMonthsComponent } from './tab-view/tab-view-months.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
-const routes: Routes = [
-  {path: '', component: ApresentacaoComponent}
-]
+const routes: Routes = [{ path: '', component: ApresentacaoComponent }];
 
 @NgModule({
-  declarations: [ApresentacaoComponent],
+  declarations: [ApresentacaoComponent, TabViewMonthsComponent],
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterModule.forChild(routes),
     MatCardModule,
     MatIconModule,
@@ -25,7 +27,10 @@ const routes: Routes = [
     SpinnerLoadingModule,
     FlexLayoutModule,
     MatFormFieldModule,
-    MatSelectModule
-  ]
+    MatSelectModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatListModule
+  ],
 })
-export class ApresentacaoModule { }
+export class ApresentacaoModule {}

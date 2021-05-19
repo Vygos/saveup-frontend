@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { dados } from './apresentacao.mock';
 
 @Component({
   selector: 'app-apresentacao',
@@ -8,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 export class ApresentacaoComponent implements OnInit {
 
   isLoading: boolean = false;
+
+  dados = dados;
 
   constructor() { }
 
