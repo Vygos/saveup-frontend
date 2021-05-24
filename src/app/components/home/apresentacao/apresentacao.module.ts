@@ -13,13 +13,34 @@ import { ApresentacaoComponent } from './apresentacao.component';
 import { TabViewMonthsComponent } from './tab-view/tab-view-months.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { CurrencyMaskConfig, CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 
 const routes: Routes = [{ path: '', component: ApresentacaoComponent }];
+
+const customCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: "right",
+  allowNegative: false,
+  allowZero: true,
+  decimal: ",",
+  precision: 2,
+  prefix: "R$ ",
+  suffix: "",
+  thousands: ".",
+  nullable: true,
+  min: null,
+  max: null,
+  inputMode: CurrencyMaskInputMode.FINANCIAL
+}
 
 @NgModule({
   declarations: [ApresentacaoComponent, TabViewMonthsComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
     MatCardModule,
     MatIconModule,
@@ -30,7 +51,11 @@ const routes: Routes = [{ path: '', component: ApresentacaoComponent }];
     MatSelectModule,
     MatTabsModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatInputModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ],
 })
 export class ApresentacaoModule {}
