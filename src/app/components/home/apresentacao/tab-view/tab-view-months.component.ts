@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Despesa } from 'src/app/models/despesa.model';
 import { Ganho } from 'src/app/models/ganho.model';
 
@@ -70,7 +71,7 @@ export class TabViewMonthsComponent {
       valor: [ganho ? ganho.valor : '', Validators.required]
     })
   }
-  
+
   createDespesaForm(despesa?: Despesa) {
     return this._fb.group({
       tipo: [despesa ? despesa.tipo : '', Validators.required],
@@ -90,6 +91,15 @@ export class TabViewMonthsComponent {
 
   adicionarDespesa(financa: FormArray) {
     (financa.get('ganhos') as FormArray).push(this.createDespesaForm())
+  }
+
+  deletarGanho(modal: MatDialogRef<any>,financa: FormArray, index: number) {
+    modal.close();
+    (financa.get('ganhos') as FormArray).removeAt(index);
+  }
+  
+  deletarDespesa(modal: MatDialogRef<any>,financa: FormArray, index: number) {
+    (financa.get('despesas') as FormArray).removeAt(index);
   }
   
 

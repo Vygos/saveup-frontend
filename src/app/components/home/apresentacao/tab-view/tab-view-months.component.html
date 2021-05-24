@@ -56,6 +56,9 @@
                   mat-mini-fab
                   [matTooltip]="'Excluir'"
                   class="delete-button"
+                  modal-confirm
+                  legenda="Deseja realmente excluir esse ganho?"
+                  (confirm)="deletarGanho($event,financa,i)"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>
@@ -110,6 +113,9 @@
                   mat-mini-fab
                   [matTooltip]="'Excluir'"
                   class="delete-button"
+                  modal-confirm
+                  legenda="Deseja realmente excluir essa Despesa?"
+                  (confirm)="deletarDespesa($event,financa, i)"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>

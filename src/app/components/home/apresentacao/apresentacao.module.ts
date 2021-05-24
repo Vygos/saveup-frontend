@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { CurrencyMaskConfig, CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
+import { ModalConfirmModule } from 'src/app/shared/components/modal-confirm/modal-confirm.module';
 
 const routes: Routes = [{ path: '', component: ApresentacaoComponent }];
 
@@ -55,7 +56,8 @@ const customCurrencyMaskConfig: CurrencyMaskConfig = {
     MatButtonModule,
     MatTooltipModule,
     MatInputModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    ModalConfirmModule
   ],
 })
 export class ApresentacaoModule {}
