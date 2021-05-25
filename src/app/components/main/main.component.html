@@ -1,152 +1,126 @@
-<div class="container">
-  <section class="sessao">
-    <!--navigations-->
-    <nav class="navmenu">
-      <img src="./assets/LogoSystem.png" alt="logo" class="logo" />
-      <div class="containerLinkMenu">
-        <ul class="containerLinks">
-          <li><a id="#sobre" class="linkmenu">Sobre</a></li>
-          <li><a href="" class="linkmenu">Contate-nos</a></li>
-          <li><a routerLink="/login" class="linkmenu">login</a></li>
-        </ul>
-      </div>
-    </nav>
-    <!--------Texto------->
-    <div class="text-container">
-      <p>Olá</p>
-      <p>Bem vindo ao SaveUP</p>
-      <p>Seu sistema de gestão de <br />gastos pessoais</p>
-      <button class="btn">Saiba mais</button>
+<div class="main_container" id="home">
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">SaveUP</a>
     </div>
-  </section>
-
-  <section>
-    <!--services-container---------------------------->
-    <div class="services">
-      <!--text-->
-
-      <!--1------------->
-      <div class="about-container">
-        <!--img-->
-        <img src="/assets/pexels-karolina-grabowska-4386433.jpg" />
-        <!--about-me-text-->
-        <div class="about-text">
-          <h1>Sobre nós</h1>
-
-          <p>
-            Somos um sistema focado em entregar o melhor do gerenciamento de
-            suas despesas e otimização do seu tempo, por meio do controle dos
-            seus gastos.
-          </p>
-          <p>
-            Trabalhamos com um sistema fluido que traz comodidade e melhor
-            acompanhamento dos seus gastos auxiliando dessa forma na melhor
-            gerência do seu dinheiro
-          </p>
-        </div>
-      </div>
+    <div class="navbar_items">
+      <ul>
+        <li><a routerLinkActive="active">home</a></li>
+        <li><a (click)="goToAbout()">sobre</a></li>
+        <li>
+          <a (click)="goToServices()">serviços</a>
+        </li>
+        <li>
+          <a (click)="goToContact()">contato</a>
+        </li>
+        <li>
+          <a (click)="goToOurTeam()">nosso time</a>
+        </li>
+        <li><a routerLink="/login">Login</a></li>
+      </ul>
     </div>
-  </section>
-  <section>
-    <!--services-container---------------------------->
-    <div class="services">
-      <!--text-->
-      <div class="services-text">
-        <p>O que Oferecemos?</p>
-        <p>um serviço excelente</p>
+  </div>
+
+  <div class="banner_image">
+    <div class="banner_content">
+      <h1>
+        Bem vindo ao SaveUp
+        <br />
+        <span> Seu Sistema de gerência de gastos pessoais</span>
+      </h1>
+      <p>Comprometimento e excelência é a nossa marca</p>
+      <button (click)="goToAbout()">Mais</button>
+    </div>
+  </div>
+
+  <div class="about" id="about">
+    <h1 class="title">sobre nós</h1>
+    <p>
+      Somos uma empresa que tem como foco disponibilizar para nosso cliente a
+      melhor forma de gerir seus gastos, de forma simples e intuitiva buscando
+      sempre atender as necessidades daquele que faz o nosso sistema evoluir a
+      cada dia , o nosso cliente
+    </p>
+    <div class="btn"><a (click)="goToServices()">Leia mais</a></div>
+  </div>
+
+  <div class="services" id="services">
+    <h1 class="title">Nossos Serviços</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam quia,
+      porro repellendus dolore repudiandae, accusantium corporis harum vel iste
+      suscipit maiores provident ullam itaque libero minus nesciunt consequatur
+      iusto numquam asperiores quod fugiat veniam blanditiis.
+    </p>
+    <div class="diff_services">
+      <div class="diff_services_item">
+        <img src="assets/imginvest1.jpg" alt="service_image" />
+        <h3 class="sub_title">Gestão de Finanças</h3>
         <p>
-          if you want make a software for your bussniess conatact me.I make as
-          soon as possibale.You really like my work, if you don&#8217;t i change
-          this until you like if you want make a software for your bussniess
-          conatact me.I make as soon
+          Oferecemos o serviço de gerenciamento de gestão de gastos pessoais
+          trazendo dessa forma uma excelente solução de controle para suas
+          finanças.
         </p>
       </div>
-      <div class="box-container">
-        <!--1------------->
-        <div class="box-1">
-          <span>1</span>
-          <p class="heading">Web Design</p>
-          <p class="details">
-            if you want make a software for your bussniess conatact me.I make as
-            soon as possibale.You really like my work, if you don&#8217;t i
-            change this until you like if you want.
-          </p>
-          <button>Read More</button>
-        </div>
-        <!--2------------->
-        <div class="box-2">
-          <span>2</span>
-          <p class="heading">Web Devoloment</p>
-          <p class="details">
-            if you want make a software for your bussniess conatact me.I make as
-            soon as possibale.You really like my work, if you don&#8217;t i
-            change this until you like if you want.
-          </p>
-          <button>Read More</button>
-        </div>
-        <!--3------------->
-        <div class="box-3">
-          <span>3</span>
-          <p class="heading">Security SEO</p>
-          <p class="details">
-            if you want make a software for your bussniess conatact me.I make as
-            soon as possibale.You really like my work, if you don&#8217;t i
-            change this until you like if you want.
-          </p>
-          <button>Read More</button>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section>
-    <!--services-container---------------------------->
-    <div class="services">
-      <!--text-->
-      <div class="services-text">
-        <p>Oque Oferecemos</p>
-        <p>Qualites Requaid</p>
+      <div class="diff_services_item">
+        <img src="assets/money.jpg" alt="service_image" />
+        <h3 class="sub_title">Organização Financeira</h3>
         <p>
-          if you want make a software for your bussniess conatact me.I make as
-          soon as possibale.You really like my work, if you don&#8217;t i change
-          this until you like if you want make a software for your bussniess
-          conatact me.I make as soon
+          Ofereçemos uma forma simples e eficaz na organização das suafinanças
         </p>
       </div>
-      <div class="box-container">
-        <!--1------------->
-        <div class="box-1">
-          <span>1</span>
-          <p class="heading">Web Design</p>
-          <p class="details">
-            if you want make a software for your bussniess conatact me.I make as
-            soon as possibale.You really like my work, if you don&#8217;t i
-            change this until you like if you want.
-          </p>
-          <button>Read More</button>
+      <div class="diff_services_item">
+        <img src="assets/dolar.jpg" alt="service_image" />
+        <h3 class="sub_title">Aumento dos redimentos</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      </div>
+    </div>
+  </div>
+  <div class="contactus" id="contactus">
+    <h1 class="title">entre em contato</h1>
+    <div class="form_wrapper">
+      <div class="form_input">
+        <input type="text" placeholder="Email" />
+      </div>
+      <div class="form_input">
+        <input type="text" placeholder="Assunto" />
+      </div>
+      <div class="form_input">
+        <textarea placeholder="Mensagem"></textarea>
+      </div>
+      <div class="btn">
+        <a href="#">enviar</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ourteam" id="ourteam">
+    <h1 class="title">nosso time</h1>
+    <div class="ourteam_wrapper">
+      <div class="team-1 team">
+        <div class="team_members" data-name="nathan john">
+          <img src="../../../assets/hacker.jpg" alt="Team_Images" />
         </div>
-        <!--2------------->
-        <div class="box-2">
-          <span>2</span>
-          <p class="heading">Web Devoloment</p>
-          <p class="details">
-            if you want make a software for your bussniess conatact me.I make as
-            soon as possibale.You really like my work, if you don&#8217;t i
-            change this until you like if you want.
-          </p>
-          <button>Read More</button>
+        <div class="team_members" data-name="Alyssa Healy">
+          <img src="../../../assets/hacker.jpg" alt="Team_Images" />
         </div>
-        <!--3------------->
-        <div class="box-3">
-          <span>3</span>
-          <p class="heading">Security SEO</p>
-          <p class="details">
-            if you want make a software for your bussniess conatact me.I make as
-            soon as possibale.You really like my work, if you don&#8217;t i
-            change this until you like if you want.
-          </p>
-          <button>Read More</button>
+        <div class="team_members" data-name="Alec Stewart">
+          <img src="../../../assets/hacker.jpg" alt="Team_Images" />
+        </div>
+      </div>
+      <div class="team-2 team">
+        <div class="team_members" data-name="Michael Rippon">
+          <img src="../../../assets/hacker.jpg" alt="Team_Images" />
         </div>
       </div>
     </div>
-  </section>
+  </div>
+
+  <div class="footer">
+    <a href="#">© copyright 2021 SaveUp.ltda </a>
+  </div>
+
+  <div class="arrow">
+    <a href="#home"><img src="assets/arrow.png" alt="up_arrow" /></a>
+  </div>
 </div>
