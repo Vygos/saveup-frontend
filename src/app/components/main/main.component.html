@@ -1,59 +1,126 @@
-<div class="wrapper">
-  <nav class="navbar">
-    <img src="../../../assets/LogoSystem.png" alt="logo" class="logo" />
-    <ul>
-      <li><a href="">sobre</a></li>
-      <li><a href="">quem somos</a></li>
-      <li><a routerLink="/login">login</a></li>
-    </ul>
-  </nav>
+<div class="main_container" id="home">
+  <div class="navbar">
+    <div class="logo">
+      <a href="#">SaveUP</a>
+    </div>
+    <div class="navbar_items">
+      <ul>
+        <li><a routerLinkActive="active">home</a></li>
+        <li><a (click)="goToAbout()">sobre</a></li>
+        <li>
+          <a (click)="goToServices()">serviços</a>
+        </li>
+        <li>
+          <a (click)="goToContact()">contato</a>
+        </li>
+        <li>
+          <a (click)="goToOurTeam()">nosso time</a>
+        </li>
+        <li><a routerLink="/login">Login</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="banner_image">
+    <div class="banner_content">
+      <h1>
+        Bem vindo ao SaveUp
+        <br />
+        <span> Seu Sistema de gerência de gastos pessoais</span>
+      </h1>
+      <p>Comprometimento e excelência é a nossa marca</p>
+      <button (click)="goToAbout()">Mais</button>
+    </div>
+  </div>
+
+  <div class="about" id="about">
+    <h1 class="title">sobre nós</h1>
+    <p>
+      Somos uma empresa que tem como foco disponibilizar para nosso cliente a
+      melhor forma de gerir seus gastos, de forma simples e intuitiva buscando
+      sempre atender as necessidades daquele que faz o nosso sistema evoluir a
+      cada dia , o nosso cliente
+    </p>
+    <div class="btn"><a (click)="goToServices()">Leia mais</a></div>
+  </div>
+
+  <div class="services" id="services">
+    <h1 class="title">Nossos Serviços</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam quia,
+      porro repellendus dolore repudiandae, accusantium corporis harum vel iste
+      suscipit maiores provident ullam itaque libero minus nesciunt consequatur
+      iusto numquam asperiores quod fugiat veniam blanditiis.
+    </p>
+    <div class="diff_services">
+      <div class="diff_services_item">
+        <img src="assets/imginvest1.jpg" alt="service_image" />
+        <h3 class="sub_title">Gestão de Finanças</h3>
+        <p>
+          Oferecemos o serviço de gerenciamento de gestão de gastos pessoais
+          trazendo dessa forma uma excelente solução de controle para suas
+          finanças.
+        </p>
+      </div>
+      <div class="diff_services_item">
+        <img src="assets/money.jpg" alt="service_image" />
+        <h3 class="sub_title">Organização Financeira</h3>
+        <p>
+          Ofereçemos uma forma simples e eficaz na organização das suafinanças
+        </p>
+      </div>
+      <div class="diff_services_item">
+        <img src="assets/dolar.jpg" alt="service_image" />
+        <h3 class="sub_title">Aumento dos redimentos</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      </div>
+    </div>
+  </div>
+  <div class="contactus" id="contactus">
+    <h1 class="title">entre em contato</h1>
+    <div class="form_wrapper">
+      <div class="form_input">
+        <input type="text" placeholder="Email" />
+      </div>
+      <div class="form_input">
+        <input type="text" placeholder="Assunto" />
+      </div>
+      <div class="form_input">
+        <textarea placeholder="Mensagem"></textarea>
+      </div>
+      <div class="btn">
+        <a href="#">enviar</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ourteam" id="ourteam">
+    <h1 class="title">nosso time</h1>
+    <div class="ourteam_wrapper">
+      <div class="team-1 team">
+        <div class="team_members" data-name="nathan john">
+          <img src="../../../assets/hacker.jpg" alt="Team_Images" />
+        </div>
+        <div class="team_members" data-name="Alyssa Healy">
+          <img src="../../../assets/hacker.jpg" alt="Team_Images" />
+        </div>
+        <div class="team_members" data-name="Alec Stewart">
+          <img src="../../../assets/hacker.jpg" alt="Team_Images" />
+        </div>
+      </div>
+      <div class="team-2 team">
+        <div class="team_members" data-name="Michael Rippon">
+          <img src="../../../assets/hacker.jpg" alt="Team_Images" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="#">© copyright 2021 SaveUp.ltda </a>
+  </div>
+
+  <div class="arrow">
+    <a href="#home"><img src="assets/arrow.png" alt="up_arrow" /></a>
+  </div>
 </div>
-<header id="home">
-  <div class="img-wrapper">
-    <img src="../../../assets/bg1.jpg" alt="bg" />
-  </div>
-  <div class="banner">
-    <h1>Bem vindo ao SaveUp</h1>
-    <p>O seu sistema de gestão de gastos pessoais</p>
-    <a href="#sobre">
-      <button>saiba mais</button>
-    </a>
-  </div>
-</header>
-<section class="sobre">
-  <div id="sobre" class="sobre-info">
-    <h1>Sobre</h1>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quas
-      culpa velit totam aspernatur ab nulla? Veniam ex commodi maiores tempore
-      officia dignissimos? Eum maiores molestias cumque quae repellendus
-      eligendi!Loremlorem
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit quas
-      culpa velit totam aspernatur ab nulla? Veniam ex commodi maiores tempore
-      officia dignissimos? Eum maiores molestias cumque quae repellendus
-      eligendi!Loremlorem
-    </p>
-    <div class="sobre-img">
-      <img src="../../../assets/imginvest1.jpg" alt="" />
-    </div>
-  </div>
-</section>
-<section class="servicos" id="produtos">
-  <h1>Oque Oferecemos</h1>
-  <div class="servicos-container green">
-    <div class="servicos-item">
-      <h2>Gestão de gastos</h2>
-      <img src="../../../assets/dolar.jpg" alt="Produtos 1" />
-    </div>
-    <div class="servicos-item black">
-      <h2>Pink</h2>
-      <img src="../../../assets/money.jpg" alt="Produtos 2" />
-    </div>
-    <div class="servicos-item graw">
-      <h2>Blue</h2>
-      <img src="../../../assets/imginvest1.jpg" alt="Produtos 3" />
-    </div>
-  </div>
-</section>

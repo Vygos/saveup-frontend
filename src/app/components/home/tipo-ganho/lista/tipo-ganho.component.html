@@ -37,9 +37,9 @@
                   <mat-icon>settings</mat-icon>
                 </button>
                 <mat-menu #actions>
-                  <button mat-menu-item>
+                  <button mat-menu-item (click)= "editar(element)">
                     <mat-icon>edit</mat-icon>
-                    Editar
+                    Editar 
                   </button>
                   <button
                     modal-confirm
