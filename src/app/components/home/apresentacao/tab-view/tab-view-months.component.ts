@@ -1,8 +1,18 @@
 import { Component, Input } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { forkJoin } from 'rxjs';
 import { Despesa } from 'src/app/models/despesa.model';
 import { Ganho } from 'src/app/models/ganho.model';
+import { TipoGanho } from 'src/app/models/tipo-ganho.model';
+import { TipoDespesaService } from 'src/app/service/tipo-despesa.service';
+import { TipoGanhoService } from 'src/app/service/tipo-ganho.service';
 
 interface Financa {
   mes: string;
@@ -18,30 +28,41 @@ export class TabViewMonthsComponent {
   form: FormGroup;
   _data: Financa[];
 
+  tipoGanhos: TipoGanho[]
+
   isEditar: boolean = false;
 
   @Input()
   set data(data: Financa[]) {
     this._data = data;
   }
-  
 
-  constructor(private _fb: FormBuilder) {}
+  constructor(
+    private _fb: FormBuilder,
+    private tipoGanhoService: TipoGanhoService,
+    private tipoDespesaService: TipoDespesaService
+  ) {}
 
   get financas() {
     return this.form.get('financas') as FormArray;
   }
-  
 
   ngOnInit(): void {
     this.initForm();
+    this.loadTipos();
+  }
+
+  loadTipos() {
+    forkJoin([this.tipoGanhoService.findAllDefault()]).subscribe(([tipoGanhos]) => {
+      this.tipoGanhos = tipoGanhos as TipoGanho[];
+      console.log("tipoganhos", this.tipoGanhos)
+    })
   }
 
   initForm() {
     this.form = this._fb.group({
       financas: this._fb.array(this.initFinancas(this._data)),
     });
-    
   }
 
   initFinancas(financas: Financa[]) {
@@ -56,7 +77,6 @@ export class TabViewMonthsComponent {
     return ganhos.map((ganho) => this.createGanhoForm(ganho));
   }
 
-
   createFinancaForm(financa?: Financa) {
     return this._fb.group({
       mes: [financa ? financa.mes : ''],
@@ -68,40 +88,39 @@ export class TabViewMonthsComponent {
   createGanhoForm(ganho?: Ganho) {
     return this._fb.group({
       tipo: [ganho ? ganho.tipo : '', Validators.required],
-      valor: [ganho ? ganho.valor : '', Validators.required]
-    })
+      valor: [ganho ? ganho.valor : '', Validators.required],
+    });
   }
 
   createDespesaForm(despesa?: Despesa) {
     return this._fb.group({
       tipo: [despesa ? despesa.tipo : '', Validators.required],
-      valor: [despesa ? despesa.valor : '', Validators.required]
-    })
+      valor: [despesa ? despesa.valor : '', Validators.required],
+    });
   }
-
 
   asFormArray(nome: string, abstractControl: AbstractControl): FormArray {
     return abstractControl.get(nome) as FormArray;
   }
 
-
   adicionarGanho(financa: FormArray) {
-    (financa.get('ganhos') as FormArray).push(this.createGanhoForm())
+    (financa.get('ganhos') as FormArray).push(this.createGanhoForm());
   }
 
   adicionarDespesa(financa: FormArray) {
-    (financa.get('ganhos') as FormArray).push(this.createDespesaForm())
+    (financa.get('ganhos') as FormArray).push(this.createDespesaForm());
   }
 
-  deletarGanho(modal: MatDialogRef<any>,financa: FormArray, index: number) {
+  deletarGanho(modal: MatDialogRef<any>, financa: FormArray, index: number) {
     modal.close();
     (financa.get('ganhos') as FormArray).removeAt(index);
   }
-  
-  deletarDespesa(modal: MatDialogRef<any>,financa: FormArray, index: number) {
+
+  deletarDespesa(modal: MatDialogRef<any>, financa: FormArray, index: number) {
     (financa.get('despesas') as FormArray).removeAt(index);
   }
-  
 
-
+  compare(tp1: TipoGanho, tp2: TipoGanho) {
+    return tp1.id === tp2.id;
+  }
 }

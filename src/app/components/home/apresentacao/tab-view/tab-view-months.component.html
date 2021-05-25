@@ -5,18 +5,6 @@
         <mat-tab [label]="financa.get('mes').value">
           <h2 fxLayoutAlign="center" style="color: green">
             {{ financa.get("mes").value }}
-            <button
-              mat-icon-button
-              matTooltip="Editar"
-              [matTooltipPosition]="'right'"
-            >
-              <mat-icon
-                class="edit-button"
-                [inline]="true"
-                (click)="isEditar = true"
-                >mode</mat-icon
-              >
-            </button>
           </h2>
           <h3 style="margin-left: 20px">
             <b>GANHOS</b>
@@ -47,7 +35,11 @@
               >
                 <mat-form-field appearance="outline">
                   <mat-label>Tipo Ganho</mat-label>
-                  <mat-select type="text" formControlName="tipo"></mat-select>
+                  <mat-select [compareWith]="compare" type="text" formControlName="tipo">
+                    <mat-option *ngFor="let tipo of tipoGanhos" [value]="tipo">
+                      {{tipo.nome}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                   <input matInput type="text" formControlName="valor" currencyMask/>
@@ -77,6 +69,7 @@
             </div>
           </div>
           <mat-divider></mat-divider>
+          <br>
           <h3 style="margin-left: 20px"><b>DESPESAS</b></h3>
           <div formArrayName="despesas">
             <form
@@ -132,6 +125,16 @@
                 <mat-icon>add</mat-icon>
               </button>
             </div>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end" *ngIf="!isEditar">
+            <button
+              class="button-edit"
+              mat-raised-button
+              fxFlex="10"
+              (click)="isEditar = true"
+            >
+            Editar
+            </button>
           </div>
           <div fxLayout="row" fxLayoutAlign="end center" *ngIf="isEditar">
             <button mat-raised-button color="primary" class="save-button">

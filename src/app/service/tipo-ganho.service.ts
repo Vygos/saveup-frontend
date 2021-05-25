@@ -38,6 +38,13 @@ export class TipoGanhoService {
     );
   }
 
+
+  findAllDefault(): Observable<TipoGanho[]> {
+    return this.http.get<TipoGanho[]>(
+      `${environment.apiUrl}/tipo-ganho/findAll`
+    );
+  }
+
   isAlreadyExistsByNome(nome: string): Observable<boolean> {
     const params = new HttpParams().append('nome', nome);
 
