@@ -114,7 +114,7 @@ export class TabViewMonthsComponent {
   }
 
   adicionarDespesa(financa: FormArray) {
-    (financa.get('ganhos') as FormArray).push(this.createDespesaForm());
+    (financa.get('despesas') as FormArray).push(this.createDespesaForm());
   }
 
   deletarGanho(modal: MatDialogRef<any>, financa: FormArray, index: number) {

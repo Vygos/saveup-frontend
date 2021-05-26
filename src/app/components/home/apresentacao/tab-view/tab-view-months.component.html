@@ -156,7 +156,7 @@
             </button>
           </div>
           <div fxLayout="row" fxLayoutAlign="end center" *ngIf="isEditar">
-            <button mat-raised-button color="primary" class="save-button">
+            <button mat-raised-button color="primary" class="save-button" (click)="isEditar = false">
               Salvar
             </button>
             <button
