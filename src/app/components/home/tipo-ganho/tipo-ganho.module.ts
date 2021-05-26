@@ -19,9 +19,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ModalConfirmModule } from 'src/app/shared/components/modal-confirm/modal-confirm.module';
+import { UpdateTipoGanhoComponent } from './update-tipo-ganho/update-tipo-ganho.component';
 
 @NgModule({
-  declarations: [TipoGanhoComponent, NovoCadastroComponent],
+  declarations: [TipoGanhoComponent, NovoCadastroComponent, UpdateTipoGanhoComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

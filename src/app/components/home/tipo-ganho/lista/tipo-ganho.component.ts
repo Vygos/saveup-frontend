@@ -10,6 +10,7 @@ import {
   NovoCadastroComponent,
   NovoCadastroModal,
 } from '../novo-cadastro/novo-cadastro.component';
+import { UpdateTipoGanhoComponent } from '../update-tipo-ganho/update-tipo-ganho.component';
 
 interface Filtro {
   nome: string;
@@ -78,6 +79,26 @@ export class TipoGanhoComponent implements OnInit {
           }
         );
       }
+    );
+  }
+
+  editar(tipoGanho: TipoGanho) {
+    const updateTipoGanhoRef = this.dialog.open(UpdateTipoGanhoComponent, {
+      width: '250px',
+      data: { tipoGanho },
+    });
+    updateTipoGanhoRef.componentInstance.onClose.subscribe(
+      ({ updatedTipoGanho, dialogRef}) => {
+        dialogRef.close();
+
+        this.tipoGanhoService
+          .atualizarById(updatedTipoGanho)
+          .subscribe(() => {
+            this.showSnackBar('Ação realizada com sucesso');
+            this.load();
+          }, () => this.showSnackBar('Não foi possível editar o tipo ganho'));
+      },
+      console.log
     );
   }
 
