@@ -2,7 +2,7 @@
   <form [formGroup]="form">
     <div formArrayName="financas">
       <form [formGroup]="financa" *ngFor="let financa of financas.controls">
-        <mat-tab [label]="financa.get('mes').value">
+        <mat-tab [label]="financa.get('mes').value" [disabled]="isEditar">
           <h2 fxLayoutAlign="center" style="color: green">
             {{ financa.get("mes").value }}
           </h2>
@@ -37,7 +37,7 @@
                   <mat-label>Tipo Ganho</mat-label>
                   <mat-select [compareWith]="compare" type="text" formControlName="tipo">
                     <mat-option *ngFor="let tipo of tipoGanhos" [value]="tipo">
-                      {{tipo.nome}}
+                      {{ tipo.nome }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -56,6 +56,13 @@
                 </button>
               </div>
             </form>
+            <div 
+              fxLayout="row" 
+              fxLayoutAlign="center" 
+             *ngIf="asFormArray('ganhos', financa).controls.length === 0"
+             >
+              <h3>Não possui ganhos adicionados</h3>
+            </div>
             <div fxLayout="row" fxLayoutAlign="center" *ngIf="isEditar">
               <button
                 mat-mini-fab
@@ -97,7 +104,12 @@
               >
                 <mat-form-field appearance="outline">
                   <mat-label>Tipo Despesa</mat-label>
-                  <mat-select type="text" formControlName="tipo"></mat-select>
+                  <mat-select [compareWith]="compare" type="text" formControlName="tipo">
+                    <mat-option *ngFor="let tipo of tipoDespesas" [value]="tipo">
+                      {{ tipo.nome }}
+                    </mat-option>
+                    <mat-error validate controlName="tipo"></mat-error>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                   <input matInput type="text" formControlName="valor" currencyMask/>
@@ -114,6 +126,13 @@
                 </button>
               </div>
             </form>
+            <div 
+              fxLayout="row" 
+              fxLayoutAlign="center" 
+              *ngIf="asFormArray('despesas', financa).controls.length === 0 "
+              >
+              <h3>Não possui despesas adicionadas</h3>
+            </div>
             <div fxLayout="row" fxLayoutAlign="center" *ngIf="isEditar">
               <button
                 mat-mini-fab
@@ -131,7 +150,7 @@
               class="button-edit"
               mat-raised-button
               fxFlex="10"
-              (click)="isEditar = true"
+              (click)="editar()"
             >
             Editar
             </button>
@@ -143,7 +162,7 @@
             <button
               mat-raised-button
               class="cancel-button"
-              (click)="isEditar = false"
+              (click)="cancelar()"
             >
               Cancelar
             </button>

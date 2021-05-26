@@ -11,9 +11,9 @@ export const dados = [
       { valor: 325.0, tipo: { id: 17, nome: 'Cassino' } } as Ganho,
     ],
     despesas: [
-      { valor: 153.0, tipo: { nome: 'Jogo do bicho' } } as Despesa,
-      { valor: 50.0, tipo: { nome: 'Conta de água' } } as Despesa,
-      { valor: 550.0, tipo: { nome: 'Aluguel' } } as Despesa,
+      { valor: 153.0, tipo: {id: 20, nome: 'Jogo do bicho' } } as Despesa,
+      { valor: 50.0, tipo: { id: 20, nome: 'Conta de água' } } as Despesa,
+      { valor: 550.0, tipo: { id: 20, nome: 'Aluguel' } } as Despesa,
     ],
   },
   {

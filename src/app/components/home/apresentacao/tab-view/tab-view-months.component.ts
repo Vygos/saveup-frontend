@@ -10,6 +10,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import { Despesa } from 'src/app/models/despesa.model';
 import { Ganho } from 'src/app/models/ganho.model';
+import { TipoDespesa } from 'src/app/models/tipo-despesa.model';
 import { TipoGanho } from 'src/app/models/tipo-ganho.model';
 import { TipoDespesaService } from 'src/app/service/tipo-despesa.service';
 import { TipoGanhoService } from 'src/app/service/tipo-ganho.service';
@@ -26,15 +27,18 @@ interface Financa {
 })
 export class TabViewMonthsComponent {
   form: FormGroup;
+  formCopy: any;
   _data: Financa[];
 
-  tipoGanhos: TipoGanho[]
+  tipoGanhos: TipoGanho[];
+  tipoDespesas: TipoDespesa[];
 
   isEditar: boolean = false;
 
   @Input()
   set data(data: Financa[]) {
     this._data = data;
+    this.initForm();
   }
 
   constructor(
@@ -48,15 +52,17 @@ export class TabViewMonthsComponent {
   }
 
   ngOnInit(): void {
-    this.initForm();
     this.loadTipos();
   }
 
   loadTipos() {
-    forkJoin([this.tipoGanhoService.findAllDefault()]).subscribe(([tipoGanhos]) => {
+    forkJoin([
+      this.tipoGanhoService.findAllDefault(),
+      this.tipoDespesaService.findAllDefault(),
+    ]).subscribe(([tipoGanhos, tipoDespesa]) => {
       this.tipoGanhos = tipoGanhos as TipoGanho[];
-      console.log("tipoganhos", this.tipoGanhos)
-    })
+      this.tipoDespesas = tipoDespesa as TipoDespesa[];
+    });
   }
 
   initForm() {
@@ -117,10 +123,21 @@ export class TabViewMonthsComponent {
   }
 
   deletarDespesa(modal: MatDialogRef<any>, financa: FormArray, index: number) {
+    modal.close();
     (financa.get('despesas') as FormArray).removeAt(index);
   }
 
-  compare(tp1: TipoGanho, tp2: TipoGanho) {
+  compare(tp1: TipoGanho | TipoDespesa, tp2: TipoGanho | TipoDespesa) {
     return tp1.id === tp2.id;
+  }
+
+  editar() {
+    this.isEditar = true;
+    this.formCopy = { ...this.form.value };
+  }
+
+  cancelar() {
+    this.data = this.formCopy.financas as Financa[]
+    this.isEditar = false;
   }
 }
