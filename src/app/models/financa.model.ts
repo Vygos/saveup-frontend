@@ -1,3 +1,4 @@
+import { Despesa } from "./despesa.model";
 import { Ganho } from "./ganho.model";
 
 export class Financa {
@@ -5,6 +6,6 @@ export class Financa {
     vlBase: number;
     vlMargem: number;
     periodo: string | Date;
-    ganho: Ganho[];
-    
+    ganhos: Ganho[];
+    despesas: Despesa[];
 }
