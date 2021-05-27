@@ -2,9 +2,9 @@
   <form [formGroup]="form">
     <div formArrayName="financas">
       <form [formGroup]="financa" *ngFor="let financa of financas.controls">
-        <mat-tab [label]="financa.get('mes').value" [disabled]="isEditar">
+        <mat-tab [label]="financa.get('periodo').value" [disabled]="isEditar">
           <h2 fxLayoutAlign="center" style="color: green">
-            {{ financa.get("mes").value }}
+            {{ financa.get("periodo").value }}
           </h2>
           <h3 style="margin-left: 20px">
             <b>GANHOS</b>

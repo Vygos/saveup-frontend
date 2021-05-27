@@ -9,17 +9,13 @@ import {
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { forkJoin } from 'rxjs';
 import { Despesa } from 'src/app/models/despesa.model';
+import { Financa } from 'src/app/models/financa.model';
 import { Ganho } from 'src/app/models/ganho.model';
 import { TipoDespesa } from 'src/app/models/tipo-despesa.model';
 import { TipoGanho } from 'src/app/models/tipo-ganho.model';
 import { TipoDespesaService } from 'src/app/service/tipo-despesa.service';
 import { TipoGanhoService } from 'src/app/service/tipo-ganho.service';
 
-interface Financa {
-  mes: string;
-  ganhos: Ganho[];
-  despesas: Despesa[];
-}
 @Component({
   selector: 'tab-view-months',
   templateUrl: './tab-view-months.component.html',
@@ -85,7 +81,7 @@ export class TabViewMonthsComponent {
 
   createFinancaForm(financa?: Financa) {
     return this._fb.group({
-      mes: [financa ? financa.mes : ''],
+      periodo: [financa ? financa.periodo : ''],
       despesas: this._fb.array(this.initDespesas(financa.despesas)),
       ganhos: this._fb.array(this.initGanhos(financa.ganhos)),
     });
