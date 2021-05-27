@@ -35,9 +35,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Ano</mat-label>
                     <mat-select>
-                        <mat-option value="2019">2019</mat-option>
-                        <mat-option value="2020">2020</mat-option>
-                        <mat-option value="2021">2021</mat-option>
+                        <mat-option *ngFor="let ano of anos" [value]="ano">{{ano}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
