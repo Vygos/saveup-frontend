@@ -32,6 +32,12 @@ export class TipoDespesaService {
     );
   }
 
+  findAllDefault(): Observable<TipoDespesa[]> {
+    return this.http.get<TipoDespesa[]>(
+      `${environment.apiUrl}/tipo-despesa/findAll`
+    );
+  }
+
   isAlreadyExistsByNome(nome: string): Observable<boolean> {
     const params = new HttpParams().append('nome', nome);
     return this.http.get<boolean>(

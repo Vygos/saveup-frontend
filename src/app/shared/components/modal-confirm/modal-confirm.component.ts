@@ -19,7 +19,6 @@ export class ModalConfirmComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("data", this.data)
   }
 
   confirm() {
