@@ -1,10 +1,8 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { Financa } from 'src/app/models/financa.model';
 import { FinancaService } from 'src/app/service/financa.service';
-import { dados } from './apresentacao.mock';
-import { format, parseISO } from 'date-fns';
-import ptBR from 'date-fns/locale/pt-BR';
 
 @Component({
   selector: 'app-apresentacao',
@@ -13,9 +11,11 @@ import ptBR from 'date-fns/locale/pt-BR';
 })
 export class ApresentacaoComponent implements OnInit {
 
-  isLoading: boolean = false;
+  isLoading = false;
 
   dados: Financa[];
+
+  todasAsFinancas: Financa[];
 
   anos: string[];
   
@@ -28,13 +28,19 @@ export class ApresentacaoComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'] as number;
 
-      this.financaService.listYears(id).subscribe(anos => {
+      this.isLoading = true;
+      forkJoin([
+        this.financaService.findAll(id),
+        this.financaService.listYears(id)
+      ]).subscribe(([financas, anos]) => {
+        this.todasAsFinancas = financas;
         this.anos = anos;
-      })
-
-      this.financaService.findAll(id).subscribe(financas => {
-        this.dados = financas;
+        this.isLoading = false;
       })
     })
+  }
+
+  alterarDados({value: anoSelecionado}) {
+    this.dados = this.todasAsFinancas.filter(financa => financa.periodo.toString().includes(anoSelecionado));
   }
 }

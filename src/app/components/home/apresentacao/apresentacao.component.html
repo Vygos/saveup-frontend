@@ -34,12 +34,13 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Ano</mat-label>
-                    <mat-select>
+                    <mat-select (selectionChange)="alterarDados($event)">
                         <mat-option *ngFor="let ano of anos" [value]="ano">{{ano}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <tab-view-months [data]="dados"></tab-view-months>
+
+            <tab-view-months *ngIf="dados" [data]="dados"></tab-view-months>
         </mat-card-content>
     </mat-card>
 </section>
