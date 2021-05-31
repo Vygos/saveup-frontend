@@ -2,9 +2,9 @@
   <form [formGroup]="form">
     <div formArrayName="financas">
       <form [formGroup]="financa" *ngFor="let financa of financas.controls">
-        <mat-tab [label]="financa.get('periodo').value" [disabled]="isEditar">
+        <mat-tab [label]="getMes(financa.get('periodo').value)" [disabled]="isEditar">
           <h2 fxLayoutAlign="center" style="color: green">
-            {{ financa.get("periodo").value }}
+            {{ getMes(financa.get('periodo').value) }}
           </h2>
           <h3 style="margin-left: 20px">
             <b>GANHOS</b>
@@ -156,7 +156,7 @@
             </button>
           </div>
           <div fxLayout="row" fxLayoutAlign="end center" *ngIf="isEditar">
-            <button mat-raised-button color="primary" class="save-button" (click)="isEditar = false">
+            <button mat-raised-button color="primary" class="save-button" (click)="isEditar = false" [disabled]="form.invalid">
               Salvar
             </button>
             <button

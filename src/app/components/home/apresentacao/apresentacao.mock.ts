@@ -1,9 +1,10 @@
 import { Despesa } from 'src/app/models/despesa.model';
+import { Financa } from 'src/app/models/financa.model';
 import { Ganho } from 'src/app/models/ganho.model';
 
 export const dados = [
   {
-    mes: 'Janeiro',
+    periodo: 'Janeiro',
     ganhos: [
       { valor: 3000.0, tipo: { id: 6, nome: 'Jogo do bicho' } } as Ganho,
       { valor: 2560.0, tipo: { id: 1, nome: 'salario' } } as Ganho,
@@ -17,7 +18,7 @@ export const dados = [
     ],
   },
   {
-    mes: 'Fevereiro',
+    periodo: 'Fevereiro',
     ganhos: [
         { valor: 3000.0, tipo: { nome: 'Jogo do bicho' } } as Ganho,
         { valor: 2560.0, tipo: { nome: 'Salário' } } as Ganho,
@@ -28,14 +29,14 @@ export const dados = [
     despesas: [],
   },
   {
-    mes: 'Março',
+    periodo: 'Março',
     ganhos: [],
     despesas: [],
   },
 
   {
-    mes: 'Abril',
+    periodo: 'Abril',
     ganhos: [],
     despesas: [],
   },
-];
+] as Financa[];

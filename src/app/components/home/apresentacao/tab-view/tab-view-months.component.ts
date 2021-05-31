@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { Despesa } from 'src/app/models/despesa.model';
 import { Financa } from 'src/app/models/financa.model';
@@ -135,5 +136,14 @@ export class TabViewMonthsComponent {
   cancelar() {
     this.data = this.formCopy.financas as Financa[]
     this.isEditar = false;
+  }
+
+  salvar() {
+    
+  }
+
+  getMes(mesAno: string) {
+    moment.locale('pt-BR');
+    return moment(mesAno, 'MM/YYYY').format('MMMM').toUpperCase();
   }
 }
