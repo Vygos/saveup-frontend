@@ -3,10 +3,12 @@ import {
   AbstractControl,
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabGroup } from '@angular/material/tabs';
 import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
@@ -15,6 +17,8 @@ import { Financa } from 'src/app/models/financa.model';
 import { Ganho } from 'src/app/models/ganho.model';
 import { TipoDespesa } from 'src/app/models/tipo-despesa.model';
 import { TipoGanho } from 'src/app/models/tipo-ganho.model';
+import { AuthorizationService } from 'src/app/service/authorization.service';
+import { FinancaService } from 'src/app/service/financa.service';
 import { TipoDespesaService } from 'src/app/service/tipo-despesa.service';
 import { TipoGanhoService } from 'src/app/service/tipo-ganho.service';
 
@@ -27,10 +31,10 @@ export class TabViewMonthsComponent {
   form: FormGroup;
   formCopy: any;
   _data: Financa[];
-  financaAtualIndex: number;
   tipoGanhos: TipoGanho[];
   tipoDespesas: TipoDespesa[];
   isEditar: boolean = false;
+  isLoading: boolean = false;
 
 
   @ViewChild(MatTabGroup) matTabGroup: MatTabGroup;
@@ -47,7 +51,10 @@ export class TabViewMonthsComponent {
   constructor(
     private _fb: FormBuilder,
     private tipoGanhoService: TipoGanhoService,
-    private tipoDespesaService: TipoDespesaService
+    private tipoDespesaService: TipoDespesaService,
+    private authorizationService: AuthorizationService,
+    private financaService: FinancaService,
+    private snackBar: MatSnackBar
   ) {}
 
   get financas() {
@@ -65,8 +72,8 @@ export class TabViewMonthsComponent {
 
   selectLastTab(financas: Financa[] = []) {
     if (this.matTabGroup) {
-      this.financaAtualIndex = financas.length -1;
-      this.matTabGroup.selectedIndex = this.financaAtualIndex;
+      const financaAtualIndex = financas.length -1;
+      this.matTabGroup.selectedIndex = financaAtualIndex;
     }
   }
 
@@ -100,6 +107,7 @@ export class TabViewMonthsComponent {
 
   createFinancaForm(financa?: Financa) {
     return this._fb.group({
+      id: [financa.id ? financa.id : null],
       periodo: [financa ? financa.periodo : ''],
       despesas: this._fb.array(this.initDespesas(financa.despesas)),
       ganhos: this._fb.array(this.initGanhos(financa.ganhos)),
@@ -156,8 +164,28 @@ export class TabViewMonthsComponent {
     this.isEditar = false;
   }
 
-  salvar() {
+  salvar(financaControl: FormControl) {
+    this.isLoading = true;
+    const financa = financaControl.value
+    financa.usuario = this.authorizationService.getLoggedUser();
+
+    console.log("Financa", financa)
     
+    this.financaService.create(financa)
+      .subscribe(() => {
+        this.showSnackBar('Dados cadastrados com sucesso')
+      }).add(() => {
+        this.isEditar = false;
+        this.isLoading = false;
+      })
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'end',
+    });
   }
 
   getMes(mesAno: string) {

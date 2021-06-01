@@ -1,10 +1,14 @@
+<spinner-loading *ngIf="isLoading"></spinner-loading>
 <mat-tab-group (selectedTabChange)="tabChange($event)">
   <form [formGroup]="form">
     <div formArrayName="financas">
       <form [formGroup]="financa" *ngFor="let financa of financas.controls">
-        <mat-tab [label]="getMes(financa.get('periodo').value)" [disabled]="isEditar">
+        <mat-tab
+          [label]="getMes(financa.get('periodo').value)"
+          [disabled]="isEditar"
+        >
           <h2 fxLayoutAlign="center" style="color: green">
-            {{ getMes(financa.get('periodo').value) }}
+            {{ getMes(financa.get("periodo").value) }}
           </h2>
           <h3 style="margin-left: 20px">
             <b>GANHOS</b>
@@ -35,14 +39,23 @@
               >
                 <mat-form-field appearance="outline">
                   <mat-label>Tipo Ganho</mat-label>
-                  <mat-select [compareWith]="compare" type="text" formControlName="tipo">
+                  <mat-select
+                    [compareWith]="compare"
+                    type="text"
+                    formControlName="tipo"
+                  >
                     <mat-option *ngFor="let tipo of tipoGanhos" [value]="tipo">
                       {{ tipo.nome }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
-                  <input matInput type="text" formControlName="valor" currencyMask/>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="valor"
+                    currencyMask
+                  />
                 </mat-form-field>
                 <button
                   mat-mini-fab
@@ -50,17 +63,17 @@
                   class="delete-button"
                   modal-confirm
                   legenda="Deseja realmente excluir esse ganho?"
-                  (confirm)="deletarGanho($event,financa,i)"
+                  (confirm)="deletarGanho($event, financa, i)"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </form>
-            <div 
-              fxLayout="row" 
-              fxLayoutAlign="center" 
-             *ngIf="asFormArray('ganhos', financa).controls.length === 0"
-             >
+            <div
+              fxLayout="row"
+              fxLayoutAlign="center"
+              *ngIf="asFormArray('ganhos', financa).controls.length === 0"
+            >
               <h3>Não possui ganhos adicionados</h3>
             </div>
             <div fxLayout="row" fxLayoutAlign="center" *ngIf="isEditar">
@@ -76,7 +89,7 @@
             </div>
           </div>
           <mat-divider></mat-divider>
-          <br>
+          <br />
           <h3 style="margin-left: 20px"><b>DESPESAS</b></h3>
           <div formArrayName="despesas">
             <form
@@ -104,15 +117,27 @@
               >
                 <mat-form-field appearance="outline">
                   <mat-label>Tipo Despesa</mat-label>
-                  <mat-select [compareWith]="compare" type="text" formControlName="tipo">
-                    <mat-option *ngFor="let tipo of tipoDespesas" [value]="tipo">
+                  <mat-select
+                    [compareWith]="compare"
+                    type="text"
+                    formControlName="tipo"
+                  >
+                    <mat-option
+                      *ngFor="let tipo of tipoDespesas"
+                      [value]="tipo"
+                    >
                       {{ tipo.nome }}
                     </mat-option>
                     <mat-error validate controlName="tipo"></mat-error>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
-                  <input matInput type="text" formControlName="valor" currencyMask/>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="valor"
+                    currencyMask
+                  />
                 </mat-form-field>
                 <button
                   mat-mini-fab
@@ -120,17 +145,17 @@
                   class="delete-button"
                   modal-confirm
                   legenda="Deseja realmente excluir essa Despesa?"
-                  (confirm)="deletarDespesa($event,financa, i)"
+                  (confirm)="deletarDespesa($event, financa, i)"
                 >
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
             </form>
-            <div 
-              fxLayout="row" 
-              fxLayoutAlign="center" 
-              *ngIf="asFormArray('despesas', financa).controls.length === 0 "
-              >
+            <div
+              fxLayout="row"
+              fxLayoutAlign="center"
+              *ngIf="asFormArray('despesas', financa).controls.length === 0"
+            >
               <h3>Não possui despesas adicionadas</h3>
             </div>
             <div fxLayout="row" fxLayoutAlign="center" *ngIf="isEditar">
@@ -152,11 +177,17 @@
               fxFlex="10"
               (click)="editar()"
             >
-            Editar
+              Editar
             </button>
           </div>
           <div fxLayout="row" fxLayoutAlign="end center" *ngIf="isEditar">
-            <button mat-raised-button color="primary" class="save-button" (click)="isEditar = false" [disabled]="form.invalid">
+            <button
+              mat-raised-button
+              color="primary"
+              class="save-button"
+              (click)="salvar(financa)"
+              [disabled]="form.invalid"
+            >
               Salvar
             </button>
             <button

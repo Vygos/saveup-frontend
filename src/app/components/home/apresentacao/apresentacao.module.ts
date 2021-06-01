@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CurrencyMaskConfig, CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 import { ModalConfirmModule } from 'src/app/shared/components/modal-confirm/modal-confirm.module';
 import { ValidatorModule } from 'src/app/shared/components/validator/validator.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [{ path: '', component: ApresentacaoComponent }];
 
@@ -59,7 +60,8 @@ const customCurrencyMaskConfig: CurrencyMaskConfig = {
     MatInputModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ModalConfirmModule,
-    ValidatorModule
+    ValidatorModule,
+    MatSnackBarModule
   ],
 })
 export class ApresentacaoModule {}
