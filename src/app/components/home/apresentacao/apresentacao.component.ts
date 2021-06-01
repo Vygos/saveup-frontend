@@ -4,7 +4,6 @@ import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { Financa } from 'src/app/models/financa.model';
 import { FinancaService } from 'src/app/service/financa.service';
-import { dados } from './apresentacao.mock';
 
 @Component({
   selector: 'app-apresentacao',
@@ -15,11 +14,16 @@ export class ApresentacaoComponent implements OnInit {
 
   isLoading = false;
 
-  dados: Financa[] = dados;
+  dados: Financa[];
 
   todasAsFinancas: Financa[] = [];
 
   anos: string[];
+
+  anoSelecionado: string;
+
+  totalGanhos: number;
+  totalDespesas: number;  
   
   constructor(
     private financaService: FinancaService,
@@ -27,6 +31,10 @@ export class ApresentacaoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.load();
+  }
+
+  load(): void {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'] as number;
 
@@ -37,10 +45,19 @@ export class ApresentacaoComponent implements OnInit {
       ]).subscribe(([financas, anos]) => {
         this.todasAsFinancas = financas;
         this.anos = anos;
-        this.isLoading = false;
+        this.filtrarDados(anos[0]);
         this.verificarFinanca(this.todasAsFinancas);
+        
+        this.isLoading = false;
       })
     })
+  }
+  
+  calcularValores(index: number) {
+    const financa = this.dados.find((_financa, i) => i == index);
+
+    this.totalDespesas = financa.despesas.reduce((acc, value) => acc + value.valor, 0);
+    this.totalGanhos = financa.ganhos.reduce((acc, value) => acc + value.valor, 0);
   }
 
   verificarFinanca(financas: Financa[]) {
@@ -63,8 +80,9 @@ export class ApresentacaoComponent implements OnInit {
     })
   }
 
-
-  alterarDados({value: anoSelecionado}) {
+  filtrarDados(anoSelecionado: string): void {
+    this.anoSelecionado = anoSelecionado;
     this.dados = this.todasAsFinancas.filter(financa => financa.periodo.toString().includes(anoSelecionado));
   }
+
 }
