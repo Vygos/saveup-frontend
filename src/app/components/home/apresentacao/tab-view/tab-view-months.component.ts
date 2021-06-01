@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatTabGroup } from '@angular/material/tabs';
 import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { Despesa } from 'src/app/models/despesa.model';
@@ -26,17 +27,22 @@ export class TabViewMonthsComponent {
   form: FormGroup;
   formCopy: any;
   _data: Financa[];
-
+  financaAtualIndex: number;
   tipoGanhos: TipoGanho[];
   tipoDespesas: TipoDespesa[];
-
   isEditar: boolean = false;
+
+
+  @ViewChild(MatTabGroup) matTabGroup: MatTabGroup;
 
   @Input()
   set data(data: Financa[]) {
     this._data = data;
-    this.initForm();
+    this.initForm(data);
+    this.selectLastTab(this.data);
   }
+
+  @Output() onTabChanges = new EventEmitter<number>()
 
   constructor(
     private _fb: FormBuilder,
@@ -52,6 +58,18 @@ export class TabViewMonthsComponent {
     this.loadTipos();
   }
 
+  ngAfterViewInit(): void {
+    this.selectLastTab(this._data);
+  }
+  
+
+  selectLastTab(financas: Financa[] = []) {
+    if (this.matTabGroup) {
+      this.financaAtualIndex = financas.length -1;
+      this.matTabGroup.selectedIndex = this.financaAtualIndex;
+    }
+  }
+
   loadTipos() {
     forkJoin([
       this.tipoGanhoService.findAllDefault(),
@@ -62,9 +80,9 @@ export class TabViewMonthsComponent {
     });
   }
 
-  initForm() {
+  initForm(financas: Financa[]) {
     this.form = this._fb.group({
-      financas: this._fb.array(this.initFinancas(this._data)),
+      financas: this._fb.array(this.initFinancas(financas)),
     });
   }
 
@@ -145,5 +163,9 @@ export class TabViewMonthsComponent {
   getMes(mesAno: string) {
     moment.locale('pt-BR');
     return moment(mesAno, 'MM/YYYY').format('MMMM').toUpperCase();
+  }
+
+  tabChange(tab: {index: number}) {
+    this.onTabChanges.emit(tab.index);
   }
 }

@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="tabChange($event)">
   <form [formGroup]="form">
     <div formArrayName="financas">
       <form [formGroup]="financa" *ngFor="let financa of financas.controls">
