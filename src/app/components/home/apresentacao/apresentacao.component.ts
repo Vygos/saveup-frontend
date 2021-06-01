@@ -56,8 +56,8 @@ export class ApresentacaoComponent implements OnInit {
   calcularValores(index: number) {
     const financa = this.dados.find((_financa, i) => i == index);
 
-    // this.totalDespesas = financa.despesas.reduce((acc, value) => acc + value.valor, 0);
-    // this.totalGanhos = financa.ganhos.reduce((acc, value) => acc + value.valor, 0);
+    this.totalDespesas = financa.despesas.reduce((acc, value) => acc + value.valor, 0);
+    this.totalGanhos = financa.ganhos.reduce((acc, value) => acc + value.valor, 0);
   }
 
   verificarFinanca(financas: Financa[]) {
