@@ -5,17 +5,17 @@
             <div class="conteudo">
                 <div class="saldo">
                     <p>Saldo atual:</p>
-                    <p class="saldo-valor">R$ 5000,00</p>
+                    <p class="saldo-valor">{{totalGanhos - totalDespesas | currency:'BRL'}}</p>
                 </div>
     
                 <div class="cards">
                     <mat-card class="cards-container">
                         <mat-card-content>
                             <div>
-                                <p>Receitas</p>
+                                <p>Ganhos</p>
                                 <mat-icon class="receita-color" inline="true">arrow_circle_up</mat-icon>
                             </div>
-                            <p class="receita-color">R$ 1500,00</p>
+                            <p class="receita-color">{{totalGanhos | currency:'BRL'}}</p>
                         </mat-card-content>
                     </mat-card>
     
@@ -25,7 +25,7 @@
                                 <p>Despesas</p>
                                 <mat-icon class="despesa-color" inline="true">arrow_circle_down</mat-icon>
                             </div>
-                            <p class="despesa-color">R$ 1500,00</p>
+                            <p class="despesa-color">{{totalDespesas | currency:'BRL'}}</p>
                         </mat-card-content>
                     </mat-card>
                 </div>
@@ -34,13 +34,12 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Ano</mat-label>
-                    <mat-select (selectionChange)="alterarDados($event)">
+                    <mat-select (selectionChange)="filtrarDados($event.value)" [value]="anoSelecionado">
                         <mat-option *ngFor="let ano of anos" [value]="ano">{{ano}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-
-            <tab-view-months *ngIf="dados" [data]="todasAsFinancas"></tab-view-months>
+            <tab-view-months *ngIf="dados" [data]="todasAsFinancas" (onTabChanges)="calcularValores($event)" ></tab-view-months>
         </mat-card-content>
     </mat-card>
 </section>
