@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { Financa } from 'src/app/models/financa.model';
+import { AuthorizationService } from 'src/app/service/authorization.service';
 import { FinancaService } from 'src/app/service/financa.service';
 
 @Component({
@@ -27,7 +29,9 @@ export class ApresentacaoComponent implements OnInit {
   
   constructor(
     private financaService: FinancaService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authorizationService: AuthorizationService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -82,6 +86,34 @@ export class ApresentacaoComponent implements OnInit {
   filtrarDados(anoSelecionado: string): void {
     this.anoSelecionado = anoSelecionado;
     this.dados = this.todasAsFinancas.filter(financa => financa.periodo.toString().includes(anoSelecionado));
+  }
+
+  salvar(financa: Financa) {
+    financa.usuario = this.authorizationService.getLoggedUser();
+    this.isLoading = true;
+    if (!financa.id) {
+      this.financaService.create(financa)
+        .subscribe(() => {
+          this.showSnackBar('Dados cadastrados com sucesso')
+        }).add(() => {
+          this.isLoading = false;
+        })
+    } else {
+      this.financaService.patch(financa)
+        .subscribe(() => {
+          this.showSnackBar('Dados atualizados com sucesso')
+        }).add(() => {
+          this.isLoading = false;
+        })
+    }
+  }
+
+  showSnackBar(message: string) {
+    this.snackBar.open(message, null, {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'end',
+    });
   }
 
 }

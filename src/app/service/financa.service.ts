@@ -23,4 +23,8 @@ export class FinancaService {
     return this.http.post<Financa>(`${environment.apiUrl}/financa/`, financa);
   }
 
+  patch(financa: Financa): Observable<Financa> {
+    return this.http.patch<Financa>(`${environment.apiUrl}/financa/`, financa);
+  }
+
 }

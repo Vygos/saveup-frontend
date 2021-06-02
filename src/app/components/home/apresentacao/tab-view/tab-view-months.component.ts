@@ -7,8 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatTabGroup } from '@angular/material/tabs';
 import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
@@ -17,8 +16,6 @@ import { Financa } from 'src/app/models/financa.model';
 import { Ganho } from 'src/app/models/ganho.model';
 import { TipoDespesa } from 'src/app/models/tipo-despesa.model';
 import { TipoGanho } from 'src/app/models/tipo-ganho.model';
-import { AuthorizationService } from 'src/app/service/authorization.service';
-import { FinancaService } from 'src/app/service/financa.service';
 import { TipoDespesaService } from 'src/app/service/tipo-despesa.service';
 import { TipoGanhoService } from 'src/app/service/tipo-ganho.service';
 
@@ -34,7 +31,6 @@ export class TabViewMonthsComponent {
   tipoGanhos: TipoGanho[];
   tipoDespesas: TipoDespesa[];
   isEditar: boolean = false;
-  isLoading: boolean = false;
 
 
   @ViewChild(MatTabGroup) matTabGroup: MatTabGroup;
@@ -46,15 +42,15 @@ export class TabViewMonthsComponent {
     this.selectLastTab(this.data);
   }
 
-  @Output() onTabChanges = new EventEmitter<number>()
+  @Output() onTabChanges = new EventEmitter<number>();
+  
+  @Output() onSalvar = new EventEmitter<Financa>();
+
 
   constructor(
     private _fb: FormBuilder,
     private tipoGanhoService: TipoGanhoService,
-    private tipoDespesaService: TipoDespesaService,
-    private authorizationService: AuthorizationService,
-    private financaService: FinancaService,
-    private snackBar: MatSnackBar
+    private tipoDespesaService: TipoDespesaService
   ) {}
 
   get financas() {
@@ -114,17 +110,25 @@ export class TabViewMonthsComponent {
     });
   }
 
-  createGanhoForm(ganho?: Ganho) {
+  createGanhoForm(ganho: Ganho = {}) {
     return this._fb.group({
-      tipo: [ganho ? ganho.tipo : '', Validators.required],
-      valor: [ganho ? ganho.valor : '', Validators.required],
+      id: [ganho.id ? ganho.id : null],
+      tipo: [ganho.tipo ? ganho.tipo : '', Validators.required],
+      valor: [ganho.valor ? ganho.valor : '', Validators.required],
+      financa: this._fb.group({
+        id: [ganho.financa ? ganho.financa.id : null]
+      })
     });
   }
 
-  createDespesaForm(despesa?: Despesa) {
+  createDespesaForm(despesa: Despesa = {}) {
     return this._fb.group({
-      tipo: [despesa ? despesa.tipo : '', Validators.required],
-      valor: [despesa ? despesa.valor : '', Validators.required],
+      id: [despesa.id ? despesa.id : null],
+      tipo: [despesa.tipo ? despesa.tipo : '', Validators.required],
+      valor: [despesa.valor ? despesa.valor : '', Validators.required],
+      financa: this._fb.group({
+        id: [despesa.financa ? despesa.financa.id : null]
+      })
     });
   }
 
@@ -132,12 +136,20 @@ export class TabViewMonthsComponent {
     return abstractControl.get(nome) as FormArray;
   }
 
-  adicionarGanho(financa: FormArray) {
-    (financa.get('ganhos') as FormArray).push(this.createGanhoForm());
+  adicionarGanho(financa: FormControl) {
+    const ganho: Ganho = {
+      id: null,
+      financa: financa.value
+    };
+    (financa.get('ganhos') as FormArray).push(this.createGanhoForm(ganho));
   }
 
-  adicionarDespesa(financa: FormArray) {
-    (financa.get('despesas') as FormArray).push(this.createDespesaForm());
+  adicionarDespesa(financa: FormControl) {
+    const despesa: Despesa = {
+      id: null,
+      financa: financa.value
+    };
+    (financa.get('despesas') as FormArray).push(this.createDespesaForm(despesa));
   }
 
   deletarGanho(modal: MatDialogRef<any>, financa: FormArray, index: number) {
@@ -165,27 +177,10 @@ export class TabViewMonthsComponent {
   }
 
   salvar(financaControl: FormControl) {
-    this.isLoading = true;
     const financa = financaControl.value
-    financa.usuario = this.authorizationService.getLoggedUser();
+    this.onSalvar.emit(financa);
+    this.isEditar = false;
 
-    console.log("Financa", financa)
-    
-    this.financaService.create(financa)
-      .subscribe(() => {
-        this.showSnackBar('Dados cadastrados com sucesso')
-      }).add(() => {
-        this.isEditar = false;
-        this.isLoading = false;
-      })
-  }
-
-  showSnackBar(message: string) {
-    this.snackBar.open(message, null, {
-      duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'end',
-    });
   }
 
   getMes(mesAno: string) {
