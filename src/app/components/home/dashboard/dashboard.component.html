@@ -1,5 +1,7 @@
-<div style="display: block" style="width: 600px;">
+<spinner-loading *ngIf="isLoading"></spinner-loading>
+<div style="display: block" style="width: 800px;">
   <canvas
+    *ngIf="!isLoading"
     baseChart
     [datasets]="lineChartData"
     [labels]="lineChartLabels"

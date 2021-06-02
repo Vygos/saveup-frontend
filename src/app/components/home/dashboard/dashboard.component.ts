@@ -1,35 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import * as moment from 'moment';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
+import { FinancaService } from 'src/app/service/financa.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  public lineChartData: ChartDataSets[] = [
-    {
-      data: [700.0, 200.0, 300.23, 1000.5, 3000.55, 950, 1050.23],
-      label: 'Ganhos',
-    },
-    {
-      data: [200.0, 500.0, 55.23, 500.5, 750.55, 950, 1050.23],
-      label: 'Despesas',
-    },
-    {
-      data: [1000.0, 1000.0, 500.23, 500.5, 2300.55, 950, 3250.23],
-      label: 'Saldo Final',
-    },
-  ];
-  public lineChartLabels: Label[] = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-  ];
+
+  isLoading = false;
+
+  public lineChartData: ChartDataSets[];
+  public lineChartLabels: Label[];
 
   public lineChartType: ChartType = 'line';
 
@@ -85,7 +70,46 @@ export class DashboardComponent implements OnInit {
     },
   ];
 
-  constructor() {}
+  constructor(
+    private financaService: FinancaService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isLoading = true;
+
+    moment.locale('pt-BR');
+
+    this.activatedRoute.params.subscribe(params => {
+      const id = params['id'];
+
+      this.financaService.chartData(id, "2021").subscribe(dataCharts => {
+
+        this.lineChartLabels = dataCharts.reduce((acc, value) => {
+          const mes = moment(value.mes, 'MM').format('MMMM');
+          return [...acc, mes]
+        }, [])
+
+        this.lineChartData = dataCharts.reduce((acc, value) => {
+          return [
+            {
+              data: acc[0] ? [...acc[0].data, value.totalGanhos] : [value.totalGanhos],
+              label: 'Ganhos'
+            },
+
+            {
+              data: acc[1] ? [...acc[1].data, value.totalDespesas] : [value.totalDespesas],
+              label: 'Despesas'
+            },
+
+            {
+              data: acc[2] ? [...acc[2].data, value.saldoFinal] : [value.saldoFinal],
+              label: 'Saldo Final'
+            }]
+        }, [])
+
+        this.isLoading = false;
+      })
+    });
+  }
 }
