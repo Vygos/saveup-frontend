@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
           id: 'y-axis-1',
           position: 'right',
           gridLines: {
-            color: 'rgba(255,0,0,0.3)',
+            color: 'rgba(0, 9, 0, 0.3)',
           },
           ticks: {
             fontColor: 'black',
@@ -47,11 +47,11 @@ export class DashboardComponent implements OnInit {
           mode: 'vertical',
           scaleID: 'x-axis-0',
           value: 'March',
-          borderColor: 'orange',
+          borderColor: 'black',
           borderWidth: 2,
           label: {
             enabled: true,
-            fontColor: 'orange',
+            fontColor: 'black',
             content: 'LineAnno',
           },
         },
@@ -61,13 +61,30 @@ export class DashboardComponent implements OnInit {
 
   lineChartColors: Color[] = [
     {
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
+      backgroundColor: 'rgba(0, 255, 96, 0.2)',
+      borderColor: 'rgba(60, 179, 113)',
+      pointBackgroundColor: 'rgba(60, 179, 113)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+      pointHoverBorderColor: 'rgba(60, 179, 113)',
     },
+    {
+      backgroundColor: 'rgba(255, 0, 0, 0.7)',
+      borderColor: 'rgba(255, 0, 0)',
+      pointBackgroundColor: 'rgba(255, 0, 0)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(255, 0, 0, 0.7)',
+    },
+    {
+      backgroundColor: 'rgba(0, 122, 255, 0.6)',
+      borderColor: 'rgba(0, 122, 255, 0.9)',
+      pointBackgroundColor: 'rgba(0, 122, 255, 0.6)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(0, 122, 255, 0.9)',
+    },
+    
   ];
 
   constructor(
@@ -82,6 +99,11 @@ export class DashboardComponent implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
+     
+      this.financaService.listYears(id).subscribe(anos => {
+        this.anos = anos;
+        
+      })
 
       this.financaService.chartData(id, "2021").subscribe(dataCharts => {
 
@@ -112,4 +134,5 @@ export class DashboardComponent implements OnInit {
       })
     });
   }
+ 
 }

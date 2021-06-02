@@ -1,12 +1,21 @@
-<spinner-loading *ngIf="isLoading"></spinner-loading>
-<div style="display: block" style="width: 800px;">
-  <canvas
-    *ngIf="!isLoading"
-    baseChart
-    [datasets]="lineChartData"
-    [labels]="lineChartLabels"
-    [chartType]="'line'"
-    [options]="lineChartOptions"
-    [colors]="lineChartColors"
-  ></canvas>
-</div>
+<section class="container">
+
+  <mat-card>
+
+
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Ano</mat-label>
+        <mat-select >
+          <mat-option *ngFor="let ano of anos" [value]="ano">{{ano}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <spinner-loading *ngIf="isLoading"></spinner-loading>
+    <div style="display: block" style="width: 800px;">
+      <canvas *ngIf="!isLoading" baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [chartType]="'line'"
+        [options]="lineChartOptions" [colors]="lineChartColors"></canvas>
+    </div>
+  </mat-card>
+</section>
