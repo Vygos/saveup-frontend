@@ -1,35 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import * as moment from 'moment';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
+import { Chart } from 'src/app/models/chart.model';
+import { FinancaService } from 'src/app/service/financa.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  public lineChartData: ChartDataSets[] = [
-    {
-      data: [700.0, 200.0, 300.23, 1000.5, 3000.55, 950, 1050.23],
-      label: 'Ganhos',
-    },
-    {
-      data: [200.0, 500.0, 55.23, 500.5, 750.55, 950, 1050.23],
-      label: 'Despesas',
-    },
-    {
-      data: [1000.0, 1000.0, 500.23, 500.5, 2300.55, 950, 3250.23],
-      label: 'Saldo Final',
-    },
-  ];
-  public lineChartLabels: Label[] = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-  ];
+
+  userId: number;
+
+  isLoading = false;
+
+  anos: string[];
+
+  anoSelecionado: string;
+
+  public lineChartData: ChartDataSets[];
+  public lineChartLabels: Label[];
 
   public lineChartType: ChartType = 'line';
 
@@ -47,7 +39,7 @@ export class DashboardComponent implements OnInit {
           id: 'y-axis-1',
           position: 'right',
           gridLines: {
-            color: 'rgba(255,0,0,0.3)',
+            color: 'rgba(0, 9, 0, 0.3)',
           },
           ticks: {
             fontColor: 'black',
@@ -62,11 +54,11 @@ export class DashboardComponent implements OnInit {
           mode: 'vertical',
           scaleID: 'x-axis-0',
           value: 'March',
-          borderColor: 'orange',
+          borderColor: 'black',
           borderWidth: 2,
           label: {
             enabled: true,
-            fontColor: 'orange',
+            fontColor: 'black',
             content: 'LineAnno',
           },
         },
@@ -76,16 +68,92 @@ export class DashboardComponent implements OnInit {
 
   lineChartColors: Color[] = [
     {
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
+      backgroundColor: 'rgba(0, 255, 96, 0.2)',
+      borderColor: 'rgba(60, 179, 113)',
+      pointBackgroundColor: 'rgba(60, 179, 113)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+      pointHoverBorderColor: 'rgba(60, 179, 113)',
     },
+    {
+      backgroundColor: 'rgba(255, 0, 0, 0.7)',
+      borderColor: 'rgba(255, 0, 0)',
+      pointBackgroundColor: 'rgba(255, 0, 0)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(255, 0, 0, 0.7)',
+    },
+    {
+      backgroundColor: 'rgba(0, 122, 255, 0.6)',
+      borderColor: 'rgba(0, 122, 255, 0.9)',
+      pointBackgroundColor: 'rgba(0, 122, 255, 0.6)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(0, 122, 255, 0.9)',
+    },
+
   ];
 
-  constructor() {}
+  constructor(
+    private financaService: FinancaService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    moment.locale('pt-BR');
+    this.load();
+  }
+
+  load(): void {
+    this.isLoading = true;
+    this.activatedRoute.params.subscribe(params => {
+      this.userId = params['id'] as number;
+
+      this.financaService.listYears(this.userId).subscribe(anos => {
+        this.anos = anos;
+        this.anoSelecionado = anos[0];
+
+        this.financaService.chartData(this.userId, this.anoSelecionado).subscribe(dataCharts => {
+          this.initCharts(dataCharts);
+          this.isLoading = false;
+        })
+      })
+    });
+  }
+
+  initCharts(dataCharts: Chart[]) {
+    this.lineChartLabels = dataCharts.reduce((acc, value) => {
+      const mes = moment(value.mes, 'MM').format('MMMM');
+      return [...acc, mes]
+    }, [])
+
+    this.lineChartData = dataCharts.reduce((acc, value) => {
+      return [
+        {
+          data: acc[0] ? [...acc[0].data, value.totalGanhos] : [value.totalGanhos],
+          label: 'Ganhos'
+        },
+
+        {
+          data: acc[1] ? [...acc[1].data, value.totalDespesas] : [value.totalDespesas],
+          label: 'Despesas'
+        },
+
+        {
+          data: acc[2] ? [...acc[2].data, value.saldoFinal] : [value.saldoFinal],
+          label: 'Saldo Final'
+        }]
+    }, [])
+  }
+
+  alterarAno({ value: anoSelecionado }): void {
+    this.isLoading = true;
+    this.anoSelecionado = anoSelecionado;
+
+    this.financaService.chartData(this.userId, anoSelecionado).subscribe(dataCharts => {
+      this.initCharts(dataCharts);
+      this.isLoading = false;
+    });
+  }
+
 }

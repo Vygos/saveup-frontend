@@ -34,14 +34,15 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Ano</mat-label>
-                    <mat-select (selectionChange)="filtrarDados($event.value)" [value]="anoSelecionado">
+                    <mat-select (selectionChange)="alterarAno($event.value)" [value]="anoSelecionado">
                         <mat-option *ngFor="let ano of anos" [value]="ano">{{ano}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
+
             <tab-view-months 
-                *ngIf="dados" 
-                [data]="dados" 
+                *ngIf="financas" 
+                [data]="financas" 
                 (onTabChanges)="calcularValores($event)" 
                 (onSalvar)="salvar($event)">
             </tab-view-months>
