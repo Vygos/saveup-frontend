@@ -42,7 +42,7 @@ export class ApresentacaoComponent implements OnInit {
       this.financaService.listYears(this.userId).subscribe(anos => {
         this.anos = anos;
         this.anoSelecionado = anos[0];
-      }).add(() => {
+
         this.financaService.findByYear(this.userId, this.anoSelecionado).subscribe(financas => {
           this.financas = financas;
           this.verificarFinanca(this.financas);
@@ -81,10 +81,15 @@ export class ApresentacaoComponent implements OnInit {
   alterarAno(anoSelecionado: string): void {
     this.isLoading = true;
     this.anoSelecionado = anoSelecionado;
-    
+
     this.financaService.findByYear(this.userId, this.anoSelecionado).subscribe(financas => {
       this.financas = financas;
       this.calcularValores(0);
+
+      if(this.isAnoExiste(new Date().getFullYear().toString())) {
+        this.verificarFinanca(this.financas);
+      }
+
       this.isLoading = false;
     })
   }
