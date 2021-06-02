@@ -12,19 +12,19 @@ import { FinancaService } from 'src/app/service/financa.service';
 })
 export class ApresentacaoComponent implements OnInit {
 
+  userId: number;
+
   isLoading = false;
 
-  dados: Financa[];
-
-  todasAsFinancas: Financa[] = [];
+  financas: Financa[];
 
   anos: string[];
 
   anoSelecionado: string;
 
   totalGanhos: number;
-  totalDespesas: number;  
-  
+  totalDespesas: number;
+
   constructor(
     private financaService: FinancaService,
     private activatedRoute: ActivatedRoute
@@ -36,25 +36,24 @@ export class ApresentacaoComponent implements OnInit {
 
   load(): void {
     this.activatedRoute.params.subscribe(params => {
-      const id = params['id'] as number;
+      this.userId = params['id'] as number;
 
       this.isLoading = true;
-      forkJoin([
-        this.financaService.findAll(id),
-        this.financaService.listYears(id)
-      ]).subscribe(([financas, anos]) => {
-        this.todasAsFinancas = financas;
+      this.financaService.listYears(this.userId).subscribe(anos => {
         this.anos = anos;
-        this.filtrarDados(anos[0]);
-        this.verificarFinanca(this.todasAsFinancas);
-        
-        this.isLoading = false;
+        this.anoSelecionado = anos[0];
+      }).add(() => {
+        this.financaService.findByYear(this.userId, this.anoSelecionado).subscribe(financas => {
+          this.financas = financas;
+          this.verificarFinanca(this.financas);
+          this.isLoading = false;
+        })
       })
     })
   }
-  
+
   calcularValores(index: number) {
-    const financa = this.dados.find((_financa, i) => i == index);
+    const financa = this.financas.find((_financa, i) => i == index);
 
     this.totalDespesas = financa.despesas.reduce((acc, value) => acc + value.valor, 0);
     this.totalGanhos = financa.ganhos.reduce((acc, value) => acc + value.valor, 0);
@@ -63,7 +62,7 @@ export class ApresentacaoComponent implements OnInit {
   verificarFinanca(financas: Financa[]) {
     if (!this.isPossuiFinancaMesAtual(financas)) {
       let mesAno = moment().format('MM/YYYY');
-      this.todasAsFinancas.push({
+      this.financas.push({
         periodo: mesAno,
         ganhos: [],
         despesas: []
@@ -79,9 +78,19 @@ export class ApresentacaoComponent implements OnInit {
     })
   }
 
-  filtrarDados(anoSelecionado: string): void {
+  alterarAno(anoSelecionado: string): void {
+    this.isLoading = true;
     this.anoSelecionado = anoSelecionado;
-    this.dados = this.todasAsFinancas.filter(financa => financa.periodo.toString().includes(anoSelecionado));
+    
+    this.financaService.findByYear(this.userId, this.anoSelecionado).subscribe(financas => {
+      this.financas = financas;
+      this.calcularValores(0);
+      this.isLoading = false;
+    })
+  }
+
+  isAnoExiste(ano: string): boolean {
+    return this.financas.some(financas => financas.periodo.toString().includes(ano));
   }
 
 }

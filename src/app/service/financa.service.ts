@@ -11,8 +11,9 @@ export class FinancaService {
 
   constructor(private http: HttpClient) { }
 
-  findAll(id: number): Observable<Financa[]> {
-    return this.http.get<Financa[]>(`${environment.apiUrl}/financa/${id}`);
+  findByYear(id: number, ano: string): Observable<Financa[]> {
+    const params = new HttpParams().append("ano", ano);
+    return this.http.get<Financa[]>(`${environment.apiUrl}/financa/${id}`, { params });
   }
 
   listYears(id: number): Observable<string[]> {
