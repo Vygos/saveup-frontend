@@ -11,7 +11,6 @@ import { FinancaService } from 'src/app/service/financa.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-
   userId: number;
 
   isLoading = false;
@@ -91,13 +90,12 @@ export class DashboardComponent implements OnInit {
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(0, 122, 255, 0.9)',
     },
-
   ];
 
   constructor(
     private financaService: FinancaService,
     private activatedRoute: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     moment.locale('pt-BR');
@@ -106,54 +104,70 @@ export class DashboardComponent implements OnInit {
 
   load(): void {
     this.isLoading = true;
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.subscribe((params) => {
       this.userId = params['id'] as number;
 
-      this.financaService.listYears(this.userId).subscribe(anos => {
-        this.anos = anos;
-        this.anoSelecionado = anos[0];
+      this.financaService.listYears(this.userId).subscribe((anos) => {
+        this.anos = anos[0] ? anos : [moment().format('YYYY')];
+        this.anoSelecionado = this.anos[0];
 
-        this.financaService.chartData(this.userId, this.anoSelecionado).subscribe(dataCharts => {
-          this.initCharts(dataCharts);
-          this.isLoading = false;
-        })
-      })
+        this.financaService
+          .chartData(this.userId, this.anoSelecionado)
+          .subscribe((dataCharts) => {
+            this.initCharts(dataCharts);
+            this.isLoading = false;
+          });
+      });
     });
   }
 
   initCharts(dataCharts: Chart[]) {
+    if (!dataCharts[0]) {
+      this.lineChartLabels = [];
+      this.lineChartData = [{ data: [], label: '' }];
+      return;
+    }
+
     this.lineChartLabels = dataCharts.reduce((acc, value) => {
       const mes = moment(value.mes, 'MM').format('MMMM');
-      return [...acc, mes]
-    }, [])
+      return [...acc, mes];
+    }, []);
 
     this.lineChartData = dataCharts.reduce((acc, value) => {
       return [
         {
-          data: acc[0] ? [...acc[0].data, value.totalGanhos] : [value.totalGanhos],
-          label: 'Ganhos'
+          data: acc[0]
+            ? [...acc[0].data, value.totalGanhos]
+            : [value.totalGanhos],
+          label: 'Ganhos',
         },
 
         {
-          data: acc[1] ? [...acc[1].data, value.totalDespesas] : [value.totalDespesas],
-          label: 'Despesas'
+          data: acc[1]
+            ? [...acc[1].data, value.totalDespesas]
+            : [value.totalDespesas],
+          label: 'Despesas',
         },
 
         {
-          data: acc[2] ? [...acc[2].data, value.saldoFinal] : [value.saldoFinal],
-          label: 'Saldo Final'
-        }]
-    }, [])
+          data: acc[2]
+            ? [...acc[2].data, value.saldoFinal]
+            : [value.saldoFinal],
+          label: 'Saldo Final',
+        },
+      ];
+    }, []);
   }
 
   alterarAno({ value: anoSelecionado }): void {
     this.isLoading = true;
     this.anoSelecionado = anoSelecionado;
 
-    this.financaService.chartData(this.userId, anoSelecionado).subscribe(dataCharts => {
-      this.initCharts(dataCharts);
-      this.isLoading = false;
-    });
+    this.financaService
+      .chartData(this.userId, anoSelecionado)
+      .subscribe((dataCharts) => {
+        this.initCharts(dataCharts);
+        this.isLoading = false;
+      });
   }
-
 }
