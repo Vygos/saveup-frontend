@@ -44,12 +44,13 @@ export class ApresentacaoComponent implements OnInit {
 
       this.isLoading = true;
       this.financaService.listYears(this.userId).subscribe(anos => {
-        this.anos = anos;
-        this.anoSelecionado = anos[0];
+        this.anos = anos[0] ? anos : [moment().format('YYYY')];
+        this.anoSelecionado = this.anos[0];
 
         this.financaService.findByYear(this.userId, this.anoSelecionado).subscribe(financas => {
           this.financas = financas;
           this.verificarFinanca(this.financas);
+          this.calcularValores(this.financas.length - 1);
           this.isLoading = false;
         })
       })
