@@ -56,12 +56,14 @@ export class ApresentacaoComponent implements OnInit {
     })
   }
 
-  calcularValores(index: number) {
-    const financa = this.financas.find((_financa, i) => i == index);
+  calcularValores(index: number, id?: number) {
+    const financa = id
+    ? this.financas.find(financa => financa.id == id)
+    : this.financas.find((_financa, i) => i == index);
 
     this.totalDespesas = financa.despesas.reduce((acc, value) => acc + value.valor, 0);
     this.totalGanhos = financa.ganhos.reduce((acc, value) => acc + value.valor, 0);
-  }
+  } 
 
   verificarFinanca(financas: Financa[]) {
     if (!this.isPossuiFinancaMesAtual(financas)) {
@@ -107,9 +109,12 @@ export class ApresentacaoComponent implements OnInit {
     this.isLoading = true;
     if (!financa.id) {
       this.financaService.create(financa)
-        .subscribe(() => {
+        .subscribe(({ id }) => {
+          financa.id = id;
           this.showSnackBar('Dados cadastrados com sucesso')
         }).add(() => {
+          this.atualizarNoArrayDeFinancas(financa);
+          this.calcularValores(0, financa.id);
           this.isLoading = false;
         })
     } else {
@@ -117,6 +122,8 @@ export class ApresentacaoComponent implements OnInit {
         .subscribe(() => {
           this.showSnackBar('Dados atualizados com sucesso')
         }).add(() => {
+          this.atualizarNoArrayDeFinancas(financa);
+          this.calcularValores(0, financa.id);
           this.isLoading = false;
         })
     }
@@ -130,4 +137,10 @@ export class ApresentacaoComponent implements OnInit {
     });
   }
 
+  atualizarNoArrayDeFinancas(financaAtualizada: Financa) {
+    let financa = this.financas.find(financa => financa.periodo === financaAtualizada.periodo)
+    financa.id = financaAtualizada.id;
+    financa.ganhos = financaAtualizada.ganhos
+    financa.despesas = financaAtualizada.despesas;
+  }
 }
