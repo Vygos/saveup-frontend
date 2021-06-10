@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import * as moment from 'moment';
-import { Color, BaseChartDirective, Label } from 'ng2-charts';
+import { Color, Label } from 'ng2-charts';
 import { Chart } from 'src/app/models/chart.model';
 import { FinancaService } from 'src/app/service/financa.service';
 @Component({
@@ -20,49 +20,13 @@ export class DashboardComponent implements OnInit {
   anoSelecionado: string;
 
   public lineChartData: ChartDataSets[];
+
   public lineChartLabels: Label[];
 
   public lineChartType: ChartType = 'line';
 
-  public lineChartOptions: ChartOptions & { annotation: any } = {
-    responsive: true,
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{}],
-      yAxes: [
-        {
-          id: 'y-axis-0',
-          position: 'left',
-        },
-        {
-          id: 'y-axis-1',
-          position: 'right',
-          gridLines: {
-            color: 'rgba(0, 9, 0, 0.3)',
-          },
-          ticks: {
-            fontColor: 'black',
-          },
-        },
-      ],
-    },
-    annotation: {
-      annotations: [
-        {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: 'March',
-          borderColor: 'black',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'black',
-            content: 'LineAnno',
-          },
-        },
-      ],
-    },
+  public lineChartOptions: ChartOptions = {
+    responsive: true
   };
 
   lineChartColors: Color[] = [

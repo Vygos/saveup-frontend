@@ -3,49 +3,47 @@
         <spinner-loading *ngIf="isLoading"></spinner-loading>
         <mat-card-content>
             <div>
-                <div>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Ano</mat-label>
-                        <mat-select (selectionChange)="alterarAno($event.value)" [value]="anoSelecionado">
-                            <mat-option *ngFor="let ano of anos" [value]="ano">{{ano}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-
-                <div class="cards">
-                    <mat-card class="cards-container">
-                        <mat-card-content>
-                            <div>
-                                <p>Ganhos</p>
-                                <mat-icon style="color: #009624;" inline="true">arrow_circle_up</mat-icon>
-                            </div>
-                            <p style="color: #009624;">{{totalGanhos | currency:'BRL'}}</p>
-                        </mat-card-content>
-                    </mat-card>
-
-                    <mat-card class="cards-container">
-                        <mat-card-content>
-                            <div>
-                                <p>Despesas</p>
-                                <mat-icon style="color: #ff3d00;" inline="true">arrow_circle_down</mat-icon>
-                            </div>
-                            <p style="color: #ff3d00;">{{totalDespesas | currency:'BRL'}}</p>
-                        </mat-card-content>
-                    </mat-card>
-
-                    <mat-card class="cards-container">
-                        <mat-card-content>
-                            <div class="saldo">
-                                <p>Saldo atual</p>
-                                <mat-icon style="color: #0095e6;" inline="true">attach_money
-                                </mat-icon>
-                            </div>
-                            <p style="color: #0095e6;">{{totalGanhos - totalDespesas | currency:'BRL'}}</p>
-                        </mat-card-content>
-                    </mat-card>
-                </div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Ano</mat-label>
+                    <mat-select (selectionChange)="alterarAno($event.value)" [value]="anoSelecionado">
+                        <mat-option *ngFor="let ano of anos" [value]="ano">{{ano}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
 
+            <div class="cards">
+                <mat-card class="cards-container">
+                    <mat-card-content>
+                        <div>
+                            <p>Ganhos</p>
+                            <mat-icon style="color: #009624;" inline="true">arrow_circle_up</mat-icon>
+                        </div>
+                        <p style="color: #009624;">{{totalGanhos | currency:'BRL'}}</p>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="cards-container">
+                    <mat-card-content>
+                        <div>
+                            <p>Despesas</p>
+                            <mat-icon style="color: #ff3d00;" inline="true">arrow_circle_down</mat-icon>
+                        </div>
+                        <p style="color: #ff3d00;">{{totalDespesas | currency:'BRL'}}</p>
+                    </mat-card-content>
+                </mat-card>
+
+                <mat-card class="cards-container">
+                    <mat-card-content>
+                        <div class="saldo">
+                            <p>Saldo atual</p>
+                            <mat-icon style="color: #0095e6;" inline="true">attach_money
+                            </mat-icon>
+                        </div>
+                        <p style="color: #0095e6;">{{totalGanhos - totalDespesas | currency:'BRL'}}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            
             <tab-view-months *ngIf="financas" [data]="financas" (onTabChanges)="calcularValores($event)"
                 (onSalvar)="salvar($event)">
             </tab-view-months>
