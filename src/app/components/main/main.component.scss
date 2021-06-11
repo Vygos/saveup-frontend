@@ -70,6 +70,7 @@ p {
 }
 .banner_image h1 {
   font-size: 38px;
+  color: #212121;
 }
 
 .main_container {
@@ -204,7 +205,8 @@ p {
 }
 
 .about p {
-  text-align: left;
+  text-align: justify;
+  font-size: 17px;
 }
 
 .about a {
@@ -222,6 +224,7 @@ p {
 }
 .services p {
   text-align: left;
+  font-size: 17px;
 }
 
 .diff_services {
@@ -234,7 +237,7 @@ p {
   width: 30%;
 }
 .diff_services .diff_services_item p {
-  text-align: left;
+  text-align: justify;
 }
 
 .diff_services .diff_services_item img {
@@ -242,6 +245,7 @@ p {
   margin-bottom: 25px;
   transition: all 1s;
 }
+
 .diff_services .diff_services_item img:hover {
   transform: scale(1.1);
 }
@@ -249,6 +253,7 @@ p {
 .diff_services .diff_services_item h3 {
   color: #41ce2f;
   margin-bottom: 15px;
+  font-weight: 500;
 }
 
 /* Contact us */

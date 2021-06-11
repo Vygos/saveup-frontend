@@ -2,36 +2,23 @@
   margin: 30px 80px;
 }
 
-.conteudo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.saldo {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 25px;
-}
-
-.saldo .saldo-valor {
-  color: rgb(17, 144, 230);
-}
-
 .cards {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 350px;
+  transition: all 0.5s ease;
+  margin-bottom: 15px;
 }
 
 .cards-container {
   margin: 0px 25px;
+  width: 176px;
+  height: 68px;
+  transition: all 0.5s ease;
 }
 
-.cards-container mat-card-content {
-  width: 100%;
-  height: 90px;
+.cards-container:hover {
+  transform: scale(1.1);
 }
 
 .cards-container mat-card-content div {
@@ -54,12 +41,4 @@
   margin-top: 15px;
   font-size: 20px;
   font-weight: bold;
-}
-
-.receita-color {
-  color: green;
-}
-
-.despesa-color {
-  color: red;
 }
