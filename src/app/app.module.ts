@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { jwtConfig } from '../app/config/jwt-config';
 import { NgxMaskModule } from 'ngx-mask';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,9 @@ import { NgxMaskModule } from 'ngx-mask';
     HttpClientModule,
     JwtModule.forRoot(jwtConfig),
     NgxMaskModule.forRoot(),
+    MatSnackBarModule
   ],
   bootstrap: [AppComponent],
+  providers: [MatSnackBar]
 })
 export class AppModule {}

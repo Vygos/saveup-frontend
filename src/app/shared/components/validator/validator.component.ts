@@ -42,7 +42,6 @@ export class ValidatorComponent implements OnInit {
   }
 
   getErrors() {
-    console.log('ERROR', this.formControl.errors);
     return this.formControl.invalid ? this.getMessages() : [];
   }
 

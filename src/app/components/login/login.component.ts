@@ -47,7 +47,6 @@ export class LoginComponent implements OnInit {
         .entrar(this.form.value)
         .subscribe(
           (jwt) => {
-            console.log(jwt.access_token);
             this.authorization.setAccessToken(jwt.access_token);
             this.authorization.setRefreshToken(jwt.refresh_token);
             const { id } = this.authorization.getLoggedUser();

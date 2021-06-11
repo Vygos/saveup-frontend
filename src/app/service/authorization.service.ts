@@ -5,7 +5,7 @@ import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../models/usuario.model';
-import { JWT } from './jwt.model';
+import { AccessToken, JWT } from './jwt.model';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +44,24 @@ export class AuthorizationService {
 
   getAccessToken(): string {
     return localStorage.getItem(this.ACCESS_TOKEN);
+  }
+
+  getAccessTokenDecoded(): AccessToken {
+    let accessToken = this.getAccessToken();
+
+    if (!accessToken) {
+      return;
+    }
+
+    return this.jwtHelperService.decodeToken<AccessToken>(accessToken);
+  }
+
+  isTokenExpired(): boolean {
+    if (!this.getAccessToken()) {
+      return true;
+    }
+
+    return this.jwtHelperService.isTokenExpired(this.getAccessToken());
   }
 
   getLoggedUser(): Usuario {

@@ -79,7 +79,6 @@ export class TipoDespesaComponent implements OnInit {
     });
 
     novoTipoDespesaRef.componentInstance.onClose.subscribe(({tipoDespesa, dialogRef}) => {
-      console.log('entrou');
       dialogRef.close();
 
       this.tipoDespesaService.salvar(tipoDespesa.nome)
