@@ -70,7 +70,7 @@ export class CadastroComponent implements OnInit {
     );
   }
 
-  entrar() {
+  cadastrar() {
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
