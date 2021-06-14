@@ -146,8 +146,6 @@ export class ContaComponent implements OnInit {
   salvar() {
     this.form.markAllAsTouched();
 
-    console.log('form', this.form.value);
-
     if (this.form.valid) {
       this.isLoading = true;
       if (this.form.value.foto) {

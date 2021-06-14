@@ -8,7 +8,7 @@ function tokenGetter() {
 export const jwtConfig: JwtModuleOptions = {
   config: {
     tokenGetter: tokenGetter,
-    allowedDomains: [environment.jwtApiUrl],
+    allowedDomains: [environment.apiUrlSimple],
     disallowedRoutes: [
       `${environment.apiUrl}/oauth/token`,
       `${environment.apiUrl}/usuario/salvar`,
