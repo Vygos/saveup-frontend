@@ -6,3 +6,13 @@ export class JWT {
     scope: string;
     jti: string
 }
+
+
+export class AccessToken {
+    nome: string;
+    id: number;
+    email: string;
+    exp: number;
+    jti: string;
+    client_id: string;
+}

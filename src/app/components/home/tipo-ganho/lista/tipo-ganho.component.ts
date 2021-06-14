@@ -98,12 +98,10 @@ export class TipoGanhoComponent implements OnInit {
             this.load();
           }, () => this.showSnackBar('Não foi possível editar o tipo ganho'));
       },
-      console.log
     );
   }
 
   onPageChanges(page: PageEvent) {
-    console.log('page');
     this.page.number = page.pageIndex;
     this.page.size = page.pageSize;
     this.load();
