@@ -12,7 +12,7 @@ export class UsuarioService {
   constructor(private http: HttpClient) {}
 
   salvar(usuario: Usuario, headers?: HttpHeaders): Observable<Usuario> {
-    return this.http.post<Usuario>(`${environment.apiUrl}/usuario`, usuario, {
+    return this.http.post<Usuario>(`${environment.apiUrl}/usuario/save`, usuario, {
       headers,
     });
   }
