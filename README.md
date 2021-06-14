@@ -17,3 +17,9 @@ Clonar o projeto no local que desejar
 
 Executar o comando
 `npm run start`
+
+
+Arquitetura do sistema:
+
+![arquitetura](./docs/arquitetura.jpeg?raw=true)
+
