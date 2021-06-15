@@ -36,12 +36,12 @@
         <div fxLayout="row" fxLayoutAlign="space-around center">
           <mat-form-field appearance="outline" fxFlex="30">
             <mat-label>Renda Mensal</mat-label>
-            <input matInput formControlName="vlRenda" />
+            <input matInput formControlName="vlRenda" currencyMask />
             <mat-error validate controlName="vlRenda"></mat-error>
           </mat-form-field>
           <mat-form-field appearance="outline" fxFlex="30">
             <mat-label>Data de Nascimento</mat-label>
-            <input type="date" matInput formControlName="dtNascimento" />
+            <input type="date" matInput formControlName="dtNascimento" format="'dd/mm/yyyy'" />
             <mat-error validate controlName="dtNascimento"></mat-error>
           </mat-form-field>
         </div>

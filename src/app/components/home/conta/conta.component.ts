@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { ObjectDTO } from 'src/app/models/objectdto.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { FotoAtualizarService } from 'src/app/service/foto-atualizar.service';
@@ -100,7 +101,7 @@ export class ContaComponent implements OnInit {
       cpf: [{ value: usuario.cpf ? usuario.cpf : null, disabled: true }, [Validators.required]],
       dtCadastro: [
         {
-          value: usuario.dtCadastro ? usuario.dtCadastro : null,
+          value: usuario.dtCadastro ? moment(usuario.dtCadastro).format("YYYY-MM-DD") : null,
           disabled: true,
         },
       ],
@@ -148,7 +149,7 @@ export class ContaComponent implements OnInit {
 
     if (this.form.valid) {
       this.isLoading = true;
-      if (this.form.value.foto) {
+      if (!(typeof this.form.value.foto === 'string')) {
         const fotoBlob = this.form.value.foto;
         let usuario = this.form.value as Usuario;
 
@@ -177,9 +178,13 @@ export class ContaComponent implements OnInit {
           });
       } else {
         this.usuarioService
-          .atualizar(this.usuario.id, this.usuario)
+          .atualizar(this.usuario.id, this.form.value as Usuario)
           .subscribe(() => {
+
             this.isLoading = false;
+            this.isEdit = false;
+            this.disabledFields();
+
             this.matSnack.open('Dados atualizados com sucesso', null, {
               duration: 2000,
             });

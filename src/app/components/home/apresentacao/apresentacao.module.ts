@@ -21,24 +21,9 @@ import { CurrencyMaskConfig, CurrencyMaskInputMode, NgxCurrencyModule } from 'ng
 import { ModalConfirmModule } from 'src/app/shared/components/modal-confirm/modal-confirm.module';
 import { ValidatorModule } from 'src/app/shared/components/validator/validator.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { customCurrencyMaskConfig } from 'src/app/shared/components/currency-mask-config';
 
 const routes: Routes = [{ path: '', component: ApresentacaoComponent }];
-
-const customCurrencyMaskConfig: CurrencyMaskConfig = {
-  align: "right",
-  allowNegative: false,
-  allowZero: true,
-  decimal: ",",
-  precision: 2,
-  prefix: "R$ ",
-  suffix: "",
-  thousands: ".",
-  nullable: true,
-  min: null,
-  max: null,
-  inputMode: CurrencyMaskInputMode.FINANCIAL
-}
-
 @NgModule({
   declarations: [ApresentacaoComponent, TabViewMonthsComponent],
   imports: [

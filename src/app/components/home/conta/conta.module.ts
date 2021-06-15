@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FotoInputComponent } from './foto-input/foto-input.component';
 import { NgxMaskModule } from 'ngx-mask'
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxCurrencyModule } from 'ngx-currency';
+import { customCurrencyMaskConfig } from 'src/app/shared/components/currency-mask-config';
 
 const routes: Routes = [
   {path: '', component: ContaComponent}
@@ -34,7 +36,8 @@ const routes: Routes = [
     SpinnerLoadingModule,
     MatIconModule,
     NgxMaskModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
   ]
 })
 export class ContaModule { }
