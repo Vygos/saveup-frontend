@@ -99,18 +99,18 @@ export class ContaComponent implements OnInit {
         [Validators.required, Validators.email, Validators.maxLength(255)]
       ),
       cpf: [{ value: usuario.cpf ? usuario.cpf : null, disabled: true }, [Validators.required]],
-      dtCadastro: [
-        {
-          value: usuario.dtCadastro ? moment(usuario.dtCadastro).format("YYYY-MM-DD") : null,
-          disabled: true,
-        },
-      ],
       dtNascimento: [
         {
           value: usuario.dtNascimento ? usuario.dtNascimento : null,
           disabled: true,
         },
         [Validators.required],
+      ],
+      dtCadastro: [
+        {
+          value: usuario.dtCadastro ? moment(usuario.dtCadastro).format("DD/MM/YYYY") : null,
+          disabled: true,
+        },
       ],
       vlRenda: [
         { value: usuario.vlRenda ? usuario.vlRenda : null, disabled: true },
@@ -149,7 +149,9 @@ export class ContaComponent implements OnInit {
 
     if (this.form.valid) {
       this.isLoading = true;
-      if (!(typeof this.form.value.foto === 'string')) {
+      const { foto } = this.form.value;
+
+      if (foto && !(typeof foto === 'string')) {
         const fotoBlob = this.form.value.foto;
         let usuario = this.form.value as Usuario;
 
