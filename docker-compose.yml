@@ -1,0 +1,7 @@
+version: "3"
+services:
+  saveup-frontend:
+    container_name: saveup-frontend
+    build: . 
+    ports:
+      - 80:80
