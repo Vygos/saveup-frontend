@@ -5,8 +5,8 @@ services:
 before_install:
   - docker build -t saveup/saveup-frontend .
   - docker build -t tests -f Dockerfile.dev .
+  
 script:
-  - docker run tests npm run test
 
 deploy:
   provider: elasticbeanstalk
