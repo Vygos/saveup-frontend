@@ -6,10 +6,6 @@ before_install:
   - docker build -t saveup/saveup-frontend .
   - docker build -t tests .
 
-script:
-  - docker run tests npm run test
-  - docker run saveup/saveup-frontend
-
 deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
