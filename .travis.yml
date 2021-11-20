@@ -4,7 +4,7 @@ services:
 
 before_install:
   - docker build -t saveup/saveup-frontend .
-  - docker build -t saveup/saveup-frontend-tests
+  - docker build -t saveup/saveup-frontend-tests .
 
 script:
   - docker run saveup/saveup-frontend-tests npm run test
