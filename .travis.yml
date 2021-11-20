@@ -4,10 +4,11 @@ services:
 
 before_install:
   - docker build -t saveup/saveup-frontend .
-  - docker build -t saveup/saveup-frontend-tests .
+  - docker build -t tests .
 
 script:
-  - docker run saveup/saveup-frontend-tests npm run test
+  - docker run tests npm run test
+  - docker run saveup/saveup-frontend
 
 deploy:
   provider: elasticbeanstalk
