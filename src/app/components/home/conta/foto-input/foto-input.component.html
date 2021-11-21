@@ -8,10 +8,25 @@
       <img [src]="fileChoosenBase64" />
     </ng-template>
   </div>
+  <div class="btn-pic">
+    <button
+      mat-mini-fab
+      type="button"
+      (click)="open()"
+      [disabled]="!show"
+      color="primary"
+      style="color: white"
+    >
+      <mat-icon>camera_alt</mat-icon>
+    </button>
+  </div>
+
   <input
+    id="inputFoto"
     type="file"
     class="input-file"
     (change)="getFile($event.target.files)"
     *ngIf="show"
+    [hidden]="true"
   />
 </div>

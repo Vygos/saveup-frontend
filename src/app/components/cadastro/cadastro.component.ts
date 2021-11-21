@@ -1,13 +1,14 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
-  Validators,
   AbstractControl,
+  FormBuilder,
   FormControl,
+  FormGroup,
+  Validators,
 } from '@angular/forms';
-import { map, switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import { Usuario } from 'src/app/models/usuario.model';
 import { AuthorizationService } from 'src/app/service/authorization.service';
 import { LoginService } from 'src/app/service/login.service';
@@ -25,6 +26,7 @@ export class CadastroComponent implements OnInit {
   hide: boolean = true;
   showCheck: boolean = false;
   isLoading: boolean = false;
+  $emailValidation = new Subject<string>();
 
   constructor(
     private readonly _fb: FormBuilder,
@@ -35,6 +37,7 @@ export class CadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.applyEmailAsyncValidation();
   }
 
   initForm() {
@@ -46,8 +49,8 @@ export class CadastroComponent implements OnInit {
             Validators.required,
             Validators.maxLength(100),
             Validators.email,
+            this.existsByEmail(),
           ],
-          asyncValidators: this.existsByEmail(this.usuarioService),
         }),
         senha1: [
           '',
@@ -68,6 +71,20 @@ export class CadastroComponent implements OnInit {
       },
       { validators: this.passwordValidator }
     );
+  }
+
+  applyEmailAsyncValidation() {
+    this.$emailValidation.pipe(debounceTime(500)).subscribe((value: string) => {
+      this.usuarioService.existsByEmail(value).subscribe((value) => {
+        const { errors } = this.email;
+
+        if (value) {
+          this.email.setErrors({ emailExists: true });
+        } else {
+          this.email.setErrors(errors);
+        }
+      });
+    });
   }
 
   cadastrar() {
@@ -115,15 +132,18 @@ export class CadastroComponent implements OnInit {
     }
   }
 
-  existsByEmail(usuarioService: UsuarioService) {
+  existsByEmail() {
     return (control: AbstractControl) => {
       if (!control.value) {
         return null;
       }
 
-      return usuarioService
-        .existsByEmail(control.value)
-        .pipe(map((exists) => (exists ? { emailExists: true } : null)));
+      this.$emailValidation.next(control.value);
+      return null;
     };
+  }
+
+  get email() {
+    return this.form.get('email');
   }
 }

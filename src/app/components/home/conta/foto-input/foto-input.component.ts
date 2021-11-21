@@ -29,6 +29,10 @@ export class FotoInputComponent implements OnInit {
     return this._foto;
   }
 
+  open() {
+    document.getElementById('inputFoto').click();
+  }
+
   async getFile(files: File[]) {
     this._foto.setValue(files[0]);
     this.fileChoosenBase64 = (await this.toBase64(files[0])) as string;

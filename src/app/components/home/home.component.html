@@ -10,61 +10,12 @@
           <img [src]="'data:image/jpeg;base64,' + usuario.fotoBase64" />
         </ng-template>
       </div>
-      <span>{{ usuario.nome }}</span>
     </div>
+    <span style="text-align: center; display: flow-root;">
+      <strong>{{ usuario.nome }}</strong>
+    </span>
 
-    <div style="margin-top: 20px">
-      <a
-        fxLayout="row"
-        fxLayoutAlign="start start"
-        class="menu-item"
-        [routerLink]="['apresentacao', usuario.id]"
-        routerLinkActive="menu-item-active"
-      >
-        <mat-icon>home</mat-icon>
-        <h4>Home</h4>
-      </a>
-      <a
-        fxLayout="row"
-        fxLayoutAlign="start start"
-        class="menu-item"
-        [routerLink]="['conta', usuario.id]"
-        routerLinkActive="menu-item-active"
-      >
-        <mat-icon>account_circle</mat-icon>
-        <h4>Conta</h4>
-      </a>
-      <a
-        fxLayout="row"
-        fxLayoutAlign="start start"
-        class="menu-item"
-        [routerLink]="['dashboard', usuario.id]"
-        routerLinkActive="menu-item-active"
-      >
-        <mat-icon>bar_chart</mat-icon>
-        <h4>Dashboard</h4>
-      </a>
-      <a
-        fxLayout="row"
-        fxLayoutAlign="start start"
-        class="menu-item"
-        [routerLink]="['tipo-despesa']"
-        routerLinkActive="menu-item-active"
-      >
-        <mat-icon>money_off</mat-icon>
-        <h4>Tipo Despesa</h4>
-      </a>
-      <a
-        fxLayout="row"
-        fxLayoutAlign="start start"
-        class="menu-item"
-        [routerLink]="['tipo-ganho']"
-        routerLinkActive="menu-item-active"
-      >
-        <mat-icon>attach_money</mat-icon>
-        <h4>Tipo Ganho</h4>
-      </a>
-    </div>
+    <menu [usuario]="usuario"></menu>
   </mat-drawer>
   <mat-toolbar class="mat-toolbar">
     <button mat-icon-button color="primary" (click)="drawer.toggle()">
