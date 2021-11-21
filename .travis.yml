@@ -7,7 +7,7 @@ before_install:
   - docker build -t tests -f Dockerfile.dev .
   
 script:
-  - docker run tests npm run test
+  - docker run tests npm run version
 deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
